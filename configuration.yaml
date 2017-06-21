@@ -1,0 +1,478 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret latitude 
+  longitude: !secret longitude 
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 0
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Asia/Singapore
+
+  customize:
+    media_player.living_room:
+      homebridge_name: Speakers 
+      friendly_name: Speakers 
+
+    media_player.bedroom:
+      homebridge_name: Speakers 
+      friendly_name: Speakers 
+
+    media_player.study:
+      homebridge_name: Speakers 
+      friendly_name: Speakers 
+
+    sensor.living_room_door:
+      homebridge_name: Door
+      friendly_name:   Door 
+
+
+# Show links to resources in log and frontend
+#introduction:
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  api_password: !secret ui_http_pi_password 
+  # Uncomment this if you are using SSL or running in Docker etc
+  # base_url: example.duckdns.org:8123
+
+# Checks for available updates
+updater:
+
+
+media_player living_room:
+  platform: sonos 
+
+media_player bedroom:
+  platform: sonos 
+
+
+media_player office:
+  platform: sonos 
+
+
+# Discover some devices automatically
+#discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+
+# Text to speech
+tts:
+  platform: google
+
+group: !include groups.yaml
+
+script:
+
+  turn_living_room_lights_on: 
+    sequence:
+     - service: homeassistant.turn_on
+       data:
+         entity_id: light.living_room_ceiling_light_1_level_3_0
+
+  turn_office_dehumidifier_on:
+    sequence:
+     - service: climate.set_operation_mode
+       entity_id: climate.office_climate_control_cooling_1_9_2
+       data:
+         operation_mode: "Dry Air" 
+
+  turn_office_dehumidifier_off:
+    sequence:
+     - service: climate.set_operation_mode
+       entity_id: climate.office_climate_control_cooling_1_9_2
+       data:
+         operation_mode: "Off" 
+
+  turn_guestroom_aircon_on:
+    sequence:
+     - service: climate.set_operation_mode
+       entity_id: climate.guestroom_climate_control_cooling_1_12_2
+       data:
+         operation_mode: Cool
+     - delay:
+         seconds: 1
+     - service: climate.set_temperature
+       entity_id: climate.guestroom_climate_control_cooling_1_12_2
+       data:
+         temperature: 22
+     - delay:
+         seconds: 1
+     - service: climate.set_fan_mode
+       entity_id: climate.guestroom_climate_control_cooling_1_12_2
+       data:
+         fan_mode: "Auto Low"
+
+
+  turn_office_aircon_on:
+    sequence:
+     - service: climate.set_operation_mode
+       entity_id: climate.office_climate_control_cooling_1_9_2
+       data:
+         operation_mode: Cool
+     - delay:
+         seconds: 1
+     - service: climate.set_temperature
+       entity_id: climate.office_climate_control_cooling_1_9_2
+       data:
+         temperature: 23
+     - delay:
+         seconds: 1
+     - service: climate.set_fan_mode
+       entity_id: climate.office_climate_control_cooling_1_9_2
+       data:
+         fan_mode: "Auto Low"
+
+
+  turn_bedroom_aircon_on:
+    sequence:
+     - service: climate.set_operation_mode
+       entity_id: climate.bedroom_climate_control_cooling_1_8_2
+       data:
+         operation_mode: "Cool"
+     - delay:
+         seconds: 1
+     - service: climate.set_temperature
+       entity_id: climate.bedroom_climate_control_cooling_1_8_2
+       data:
+         temperature: 21
+     - delay:
+         seconds: 1
+     - service: climate.set_fan_mode
+       entity_id: climate.bedroom_climate_control_cooling_1_8_2
+       data:
+         fan_mode: "Auto High"
+
+
+  sonos_say:
+    alias: "Sonos TTS script"
+    sequence:
+     - service: media_player.sonos_snapshot
+       data_template:
+         entity_id: "{{ sonos_entity }}"
+     - service: media_player.sonos_unjoin
+       data_template:
+         entity_id: "{{ sonos_entity }}"
+     - service: media_player.volume_set
+       data_template:
+         entity_id: "{{ sonos_entity }}"
+         volume_level: "{{ volume }}"
+     - service: tts.voicerss_say
+       data_template:
+         entity_id: "{{ sonos_entity }}"
+         message: "{{ message }}"
+     - delay: "{{ delay }}"
+     - service: media_player.sonos_restore
+       data_template:
+         entity_id: "{{ sonos_entity }}"
+
+    
+input_boolean:
+  
+  motion_detection:
+    name: Motion Detection 
+    initial: on 
+    icon: mdi:car
+
+  follow_me_lights:
+    name: Follow Me Lights 
+    initial: off 
+    icon: mdi:car
+
+  play_sound:
+    name: Play Sound 
+    initial: off 
+    icon: mdi:car
+  fan:
+    name: Fan 
+    initial: off 
+    icon: mdi:car
+
+  aircon:
+    name: Aircon 
+    initial: off 
+    icon: mdi:car
+ 
+  bedroom_aircon:
+    name: Bedroom Aircon 
+    initial: off 
+    icon: mdi:car
+
+  office_aircon:
+    name: Office Aircon 
+    initial: off 
+    icon: mdi:car
+
+  office_dehumidifier:
+    name: Office DeHumidifier 
+    initial: off 
+    icon: mdi:car
+
+  guestroom_aircon:
+    name: Guestroom Aircon 
+    initial: off 
+    icon: mdi:car
+
+  tv:
+    name: TV
+    initial: off
+    icon: mdi:tv
+
+remote:
+  - platform: harmony
+    name: living room
+    host: !secret remote_host 
+
+automation:
+
+  - alias: Aircon ON 
+    trigger:
+      platform: state 
+      entity_id: input_boolean.aircon
+      to: 'on'
+    action:
+      service: remote.send_command
+      data_template:
+        entity_id: remote.living_room
+        command: Power ON 
+        device: !secret au_device_id_aircon 
+
+  - alias: Bedroom Aircon ON 
+    trigger:
+      platform: state 
+      entity_id: input_boolean.bedroom_aircon
+      to: 'on'
+    action:
+        service: script.turn_bedroom_aircon_on 
+
+  - alias: Bedroom Aircon OFF 
+    trigger:
+      platform: state 
+      entity_id: input_boolean.bedroom_aircon
+      to: 'off'
+    action:
+      service: climate.set_operation_mode 
+      entity_id: climate.bedroom_climate_control_cooling_1_8_2
+      data:
+        operation_mode: "Off" 
+
+
+  - alias: Office Aircon ON
+    trigger:
+      platform: state
+      entity_id: input_boolean.office_aircon
+      to: 'on'
+    action:
+      service: script.turn_office_aircon_on 
+
+  - alias: Office Dehumidifier ON
+    trigger:
+      platform: state
+      entity_id: input_boolean.office_dehumidifer
+      to: 'on'
+    action:
+      service: script.turn_office_dehumidifier_on
+
+
+  - alias: Office Aircon OFF
+    trigger:
+      platform: state
+      entity_id: input_boolean.office_aircon
+      to: 'off'
+    action:
+      service: climate.set_operation_mode
+      entity_id: climate.office_climate_control_cooling_1_9_2 
+      data:
+        operation_mode: "Off"
+
+  - alias: Office Dehumidifier OFF 
+    trigger:
+      platform: state
+      entity_id: input_boolean.office_dehumidifer
+      to: 'off'
+    action:
+      service: script.turn_office_dehumidifier_off
+
+  - alias: Guestroom Aircon ON
+    trigger:
+      platform: state
+      entity_id: input_boolean.guestroom_aircon
+      to: 'on'
+    action:
+        service: script.turn_guestroom_aircon_on 
+
+  - alias: Guestroom Aircon OFF
+    trigger:
+      platform: state
+      entity_id: input_boolean.guestroom_aircon
+      to: 'off'
+    action:
+      service: climate.set_operation_mode
+      entity_id: climate.guestroom_climate_control_cooling_1_12_2 
+      data:
+        operation_mode: "Off"
+
+
+  - alias: Aircon OFF 
+    trigger:
+      platform: state 
+      entity_id: input_boolean.aircon
+      to: 'off'
+    action:
+      service: remote.send_command
+      data_template:
+        entity_id: remote.living_room
+        command: Power OFF 
+        device: !secret au_device_id_aircon 
+
+
+  - alias: Fan ON 
+    trigger:
+      platform: state 
+      entity_id: input_boolean.fan
+      to: 'on'
+    action:
+      service: remote.send_command
+      data_template:
+        entity_id: remote.living_room
+        command: PowerToggle
+        device: !secret au_device_id_fan 
+ 
+
+  - alias: Fan OFF 
+    trigger:
+      platform: state 
+      entity_id: input_boolean.fan
+      to: 'off'
+    action:
+      service: remote.send_command
+      data_template:
+        entity_id: remote.living_room
+        command: PowerToggle
+        device: !secret au_device_id_fan 
+
+  - alias: Tv ON 
+    trigger:
+      platform: state 
+      entity_id: input_boolean.tv
+      to: 'on'
+    action:
+      service: remote.send_command
+      data_template:
+        entity_id: remote.living_room
+        command: PowerOn
+        device: !secret au_device_id_tv 
+ 
+
+  - alias: Tv OFF 
+    trigger:
+      platform: state 
+      entity_id: input_boolean.tv
+      to: 'off'
+    action:
+      service: remote.send_command
+      data_template:
+        entity_id: remote.living_room
+        command: PowerOff
+        device: !secret au_device_id_tv 
+
+  - alias: Door Entry
+    trigger:
+      platform: state
+      entity_id: sensor.living_room_door_entry
+      to: 'Open' 
+    condition:
+      - condition: state
+        entity_id: sun.sun
+        state: 'below_horizon'
+    action:
+      service: script.turn_living_room_lights_on 
+
+
+  - alias: Living Room Lights ON 
+    trigger:
+      platform: state
+      entity_id: sensor.living_room_motion
+      state: 'Burglar' 
+    condition:
+      - condition: state
+        entity_id: sun.sun
+        state: 'below_horizon'
+    action:
+      service: homeassistant.turn_on 
+      data:
+        entity_id: light.living_room_ceiling_light_1_level_3_0 
+
+  - alias: Turn off Living room lights after 10 mins no motion 
+    trigger:
+      platform: state
+      entity_id: sensor.living_room_motion 
+      state: 'Off'
+      for:
+        minutes: 10 
+    action:
+      service: homeassistant.turn_off
+      entity_id: light.living_room_ceiling_light_1_level_3_0 
+
+zwave:
+ usb_path: /dev/ttyACM0
+ config_path: !secret zwave_config_path 
+
+emulated_hue:
+   host_ip: !secret emul_hue_host_ip 
+   listen_port: 80
+   off_maps_to_on_domains:
+     - script
+     - scene
+   expose_by_default: true
+   exposed_domains:
+     - light
+     - switch
+
+
+logger:
+  default: info 
+
+recorder:
+  purge_days: 2
+
+device_tracker:
+  - platform: !secret dev_tracker_platform 
+    host: !secret dev_tracker_host 
+    username: !secret dev_tracker_username 
+    password: !secret dev_tracker_password 
+    interval_seconds: 10
+    consider_home: 180
+    track_new_devices: yes
+
+  - platform: owntracks
+
+mqtt:
+  broker: !secret mqtt_broker 
+  port: !secret mqtt_broker_port 
+  username: !secret mqtt_broker_username 
+  password: !secret mqtt_broker_password 
+
+ 
+sensor: !include includes/sensors/template.yaml 
+#zone:  !include includes/zone.yaml
+

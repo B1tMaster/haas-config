@@ -1,0 +1,8 @@
+secrets.yaml
+emulated_hue_ids.json
+harmony_living_room.conf
+*.log
+OZW_Log*
+zwcfg_0xec7d149e.xml
+known_devices.yaml
+
