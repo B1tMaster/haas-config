@@ -11,22 +11,7 @@ homeassistant:
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Asia/Singapore
 
-  customize:
-    media_player.living_room:
-      homebridge_name: Speakers 
-      friendly_name: Speakers 
 
-    media_player.bedroom:
-      homebridge_name: Speakers 
-      friendly_name: Speakers 
-
-    media_player.study:
-      homebridge_name: Speakers 
-      friendly_name: Speakers 
-
-    sensor.living_room_door:
-      homebridge_name: Door
-      friendly_name:   Door 
 
 
 # Show links to resources in log and frontend
@@ -79,113 +64,9 @@ sun:
 tts:
   platform: google
 
-group: !include groups.yaml
-
-script:
-
-  turn_living_room_lights_on: 
-    sequence:
-     - service: homeassistant.turn_on
-       data:
-         entity_id: light.living_room_ceiling_light_1_level_3_0
-
-  turn_office_dehumidifier_on:
-    sequence:
-     - service: climate.set_operation_mode
-       entity_id: climate.office_climate_control_cooling_1_9_2
-       data:
-         operation_mode: "Dry Air" 
-
-  turn_office_dehumidifier_off:
-    sequence:
-     - service: climate.set_operation_mode
-       entity_id: climate.office_climate_control_cooling_1_9_2
-       data:
-         operation_mode: "Off" 
-
-  turn_guestroom_aircon_on:
-    sequence:
-     - service: climate.set_operation_mode
-       entity_id: climate.guestroom_climate_control_cooling_1_12_2
-       data:
-         operation_mode: Cool
-     - delay:
-         seconds: 1
-     - service: climate.set_temperature
-       entity_id: climate.guestroom_climate_control_cooling_1_12_2
-       data:
-         temperature: 22
-     - delay:
-         seconds: 1
-     - service: climate.set_fan_mode
-       entity_id: climate.guestroom_climate_control_cooling_1_12_2
-       data:
-         fan_mode: "Auto Low"
 
 
-  turn_office_aircon_on:
-    sequence:
-     - service: climate.set_operation_mode
-       entity_id: climate.office_climate_control_cooling_1_9_2
-       data:
-         operation_mode: Cool
-     - delay:
-         seconds: 1
-     - service: climate.set_temperature
-       entity_id: climate.office_climate_control_cooling_1_9_2
-       data:
-         temperature: 23
-     - delay:
-         seconds: 1
-     - service: climate.set_fan_mode
-       entity_id: climate.office_climate_control_cooling_1_9_2
-       data:
-         fan_mode: "Auto Low"
 
-
-  turn_bedroom_aircon_on:
-    sequence:
-     - service: climate.set_operation_mode
-       entity_id: climate.bedroom_climate_control_cooling_1_8_2
-       data:
-         operation_mode: "Cool"
-     - delay:
-         seconds: 1
-     - service: climate.set_temperature
-       entity_id: climate.bedroom_climate_control_cooling_1_8_2
-       data:
-         temperature: 21
-     - delay:
-         seconds: 1
-     - service: climate.set_fan_mode
-       entity_id: climate.bedroom_climate_control_cooling_1_8_2
-       data:
-         fan_mode: "Auto High"
-
-
-  sonos_say:
-    alias: "Sonos TTS script"
-    sequence:
-     - service: media_player.sonos_snapshot
-       data_template:
-         entity_id: "{{ sonos_entity }}"
-     - service: media_player.sonos_unjoin
-       data_template:
-         entity_id: "{{ sonos_entity }}"
-     - service: media_player.volume_set
-       data_template:
-         entity_id: "{{ sonos_entity }}"
-         volume_level: "{{ volume }}"
-     - service: tts.voicerss_say
-       data_template:
-         entity_id: "{{ sonos_entity }}"
-         message: "{{ message }}"
-     - delay: "{{ delay }}"
-     - service: media_player.sonos_restore
-       data_template:
-         entity_id: "{{ sonos_entity }}"
-
-    
 input_boolean:
   
   motion_detection:
@@ -408,30 +289,44 @@ automation:
       service: script.turn_living_room_lights_on 
 
 
-  - alias: Living Room Lights ON 
+  - alias: Living Room Lights ON
     trigger:
       platform: state
       entity_id: sensor.living_room_motion
-      state: 'Burglar' 
+      state: 'Burglar'
     condition:
-      - condition: state
-        entity_id: sun.sun
-        state: 'below_horizon'
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: 'below_horizon'
+        - condition: state
+          entity_id: input_boolean.motion_detection
+          state: 'on'
     action:
-      service: homeassistant.turn_on 
+      service: homeassistant.turn_on
       data:
-        entity_id: light.living_room_ceiling_light_1_level_3_0 
+        entity_id: light.living_room_ceiling_light_1_level_3_0
 
-  - alias: Turn off Living room lights after 10 mins no motion 
+  - alias: Turn off Living room lights after 10 mins no motion
     trigger:
       platform: state
-      entity_id: sensor.living_room_motion 
+      entity_id: sensor.living_room_motion
       state: 'Off'
       for:
-        minutes: 10 
+        minutes: 10
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: 'below_horizon'
+        - condition: state
+          entity_id: input_boolean.motion_detection
+          state: 'on'
     action:
       service: homeassistant.turn_off
-      entity_id: light.living_room_ceiling_light_1_level_3_0 
+      entity_id: light.living_room_ceiling_light_1_level_3_0
 
 zwave:
  usb_path: /dev/ttyACM0
@@ -472,7 +367,13 @@ mqtt:
   username: !secret mqtt_broker_username 
   password: !secret mqtt_broker_password 
 
- 
-sensor: !include includes/sensors/template.yaml 
+ customize: !include includes/customise.yaml
+
+group: !include groups.yaml
+
+script: !include_dir_merge_list includes/scripts
+
+sensor: !include_dir_merge_list includes/sensors
+
 #zone:  !include includes/zone.yaml
 

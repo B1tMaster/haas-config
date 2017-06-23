@@ -1,0 +1,52 @@
+  - entity_id: sensor.*_luminance_*
+    friendly_name: Luminance
+    icon: mdi:white-balance-sunny
+
+  - entity_id: sensor.*_temperature_*
+    friendly_name: Temperature
+    icon: mdi:thermometer
+
+  - media_player.living_room:
+    homebridge_name: Speakers
+    friendly_name: LivingRoom Speakers
+
+  - media_player.bedroom:
+      homebridge_name: Speakers
+      friendly_name: Bedroom Speakers
+
+  - media_player.study:
+    homebridge_name: Speakers
+    friendly_name: Office Speakers
+
+  - sensor.living_room_door:
+    homebridge_name: Door
+    friendly_name:   Door
+
+  - climate.guestroom_climate_control_cooling_1_12_2:
+    friendly_name: GuestRoom Aircon
+
+  - climate.bedroom_climate_control_cooling_1_8_2:
+    friendly_name: Bedroom Aircon
+
+  - climate.office_climate_control_cooling_1_9_2:
+    friendly_name: Office Aircon
+
+  - customize_glob:
+      climate.bedroom_climate_control_heating*:
+      hidden: true
+
+      climate.office_climate_control_heating*:
+      hidden: true
+
+      climate.guestroom_climate_control_heating*:
+      hidden: true
+
+      climate.bedroom_climate_control_unused_*:
+      hidden: true
+
+      climate.office_climate_control_unused_*:
+      hidden: true
+
+      climate.guestroom_climate_control_unused_*:
+      hidden: true
+

@@ -1,0 +1,5 @@
+  turn_living_room_lights_on:
+    sequence:
+     - service: homeassistant.turn_on
+       data:
+         entity_id: light.living_room_ceiling_light_1_level_3_0
