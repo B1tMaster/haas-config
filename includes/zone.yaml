@@ -1,26 +1,26 @@
 - name: Home
-  latitude:  1.311747
-  longitude: 103.939112
+  latitude:  !secret home_lat
+  longitude: !secret home_lon
   radius: 100
   icon: mdi:home
   elevation: 0
   unit_system: metric
-  time_zone: Asia/Singapore
+  time_zone: !secret timezone
   
 - name: NearHome
-  latitude:  1.3115113167817
-  longitude: 103.93934922887
+  latitude:  !secret nearhome_lat
+  longitude: !secret nearhome_lon
   radius: 200
   icon: mdi:castle
 
 - name: Work
-  latitude:  1.3342196417
-  longitude: 103.96565501
+  latitude:  !secret work_lat
+  longitude: !secret work_lon
   radius: 300
   icon: mdi:school
 
 - name: KiteBeach
-  latitude:  1.3074717117157
-  longitude: 103.9385909093
+  latitude:  !secret kitebeach_lat
+  longitude: !secret kitebeach_lon
   radius: 200
   icon: mdi:castle
