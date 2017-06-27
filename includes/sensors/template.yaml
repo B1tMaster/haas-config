@@ -1,5 +1,8 @@
 
 - platform: yr
+  monitored_conditions:
+    - windSpeed
+    - windDirection
 
 - platform: template
   sensors:

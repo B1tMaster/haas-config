@@ -1,0 +1,203 @@
+
+  - alias: Aircon ON
+    trigger:
+      platform: state
+      entity_id: input_boolean.aircon
+      to: 'on'
+    action:
+      service: remote.send_command
+      data_template:
+        entity_id: remote.living_room
+        command: Power ON
+        device: !secret au_device_id_aircon
+
+  - alias: Bedroom Aircon ON
+    trigger:
+      platform: state
+      entity_id: input_boolean.bedroom_aircon
+      to: 'on'
+    action:
+        service: script.turn_bedroom_aircon_on
+
+  - alias: Bedroom Aircon OFF
+    trigger:
+      platform: state
+      entity_id: input_boolean.bedroom_aircon
+      to: 'off'
+    action:
+      service: climate.set_operation_mode
+      entity_id: climate.bedroom_climate_control_cooling_1_8_2
+      data:
+        operation_mode: "Off"
+
+
+  - alias: Office Aircon ON
+    trigger:
+      platform: state
+      entity_id: input_boolean.office_aircon
+      to: 'on'
+    action:
+      service: script.turn_office_aircon_on
+
+  - alias: Office Dehumidifier ON
+    trigger:
+      platform: state
+      entity_id: input_boolean.office_dehumidifer
+      to: 'on'
+    action:
+      service: script.turn_office_dehumidifier_on
+
+
+  - alias: Office Aircon OFF
+    trigger:
+      platform: state
+      entity_id: input_boolean.office_aircon
+      to: 'off'
+    action:
+      service: climate.set_operation_mode
+      entity_id: climate.office_climate_control_cooling_1_9_2
+      data:
+        operation_mode: "Off"
+
+  - alias: Office Dehumidifier OFF
+    trigger:
+      platform: state
+      entity_id: input_boolean.office_dehumidifer
+      to: 'off'
+    action:
+      service: script.turn_office_dehumidifier_off
+
+  - alias: Guestroom Aircon ON
+    trigger:
+      platform: state
+      entity_id: input_boolean.guestroom_aircon
+      to: 'on'
+    action:
+        service: script.turn_guestroom_aircon_on
+
+  - alias: Guestroom Aircon OFF
+    trigger:
+      platform: state
+      entity_id: input_boolean.guestroom_aircon
+      to: 'off'
+    action:
+      service: climate.set_operation_mode
+      entity_id: climate.guestroom_climate_control_cooling_1_12_2
+      data:
+        operation_mode: "Off"
+
+
+  - alias: Aircon OFF
+    trigger:
+      platform: state
+      entity_id: input_boolean.aircon
+      to: 'off'
+    action:
+      service: remote.send_command
+      data_template:
+        entity_id: remote.living_room
+        command: Power OFF
+        device: !secret au_device_id_aircon
+
+
+  - alias: Fan ON
+    trigger:
+      platform: state
+      entity_id: input_boolean.fan
+      to: 'on'
+    action:
+      service: remote.send_command
+      data_template:
+        entity_id: remote.living_room
+        command: PowerToggle
+        device: !secret au_device_id_fan
+
+
+  - alias: Fan OFF
+    trigger:
+      platform: state
+      entity_id: input_boolean.fan
+      to: 'off'
+    action:
+      service: remote.send_command
+      data_template:
+        entity_id: remote.living_room
+        command: PowerToggle
+        device: !secret au_device_id_fan
+
+  - alias: Tv ON
+    trigger:
+      platform: state
+      entity_id: input_boolean.tv
+      to: 'on'
+    action:
+      service: remote.send_command
+      data_template:
+        entity_id: remote.living_room
+        command: PowerOn
+        device: !secret au_device_id_tv
+
+
+  - alias: Tv OFF
+    trigger:
+      platform: state
+      entity_id: input_boolean.tv
+      to: 'off'
+    action:
+      service: remote.send_command
+      data_template:
+        entity_id: remote.living_room
+        command: PowerOff
+        device: !secret au_device_id_tv
+
+  - alias: Door Entry
+    trigger:
+      platform: state
+      entity_id: sensor.living_room_door_entry
+      to: 'Open'
+    condition:
+      - condition: state
+        entity_id: sun.sun
+        state: 'below_horizon'
+    action:
+      service: script.turn_living_room_lights_on
+
+
+  - alias: Living Room Lights ON
+    trigger:
+      platform: state
+      entity_id: sensor.living_room_motion
+      state: 'Burglar'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: 'below_horizon'
+        - condition: state
+          entity_id: input_boolean.motion_detection
+          state: 'on'
+    action:
+      service: homeassistant.turn_on
+      data:
+        entity_id: light.living_room_ceiling_light_1_level_3_0
+
+  - alias: Turn off Living room lights after 10 mins no motion
+    trigger:
+      platform: state
+      entity_id: sensor.living_room_motion
+      state: 'Off'
+      for:
+        minutes: 10
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: 'below_horizon'
+        - condition: state
+          entity_id: input_boolean.motion_detection
+          state: 'on'
+    action:
+      service: homeassistant.turn_off
+      entity_id: light.living_room_ceiling_light_1_level_3_0

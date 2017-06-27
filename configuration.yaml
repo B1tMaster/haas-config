@@ -65,268 +65,12 @@ tts:
   platform: google
 
 
-
-
-input_boolean:
-  
-  motion_detection:
-    name: Motion Detection 
-    initial: on 
-    icon: mdi:car
-
-  follow_me_lights:
-    name: Follow Me Lights 
-    initial: off 
-    icon: mdi:car
-
-  play_sound:
-    name: Play Sound 
-    initial: off 
-    icon: mdi:car
-  fan:
-    name: Fan 
-    initial: off 
-    icon: mdi:car
-
-  aircon:
-    name: Aircon 
-    initial: off 
-    icon: mdi:car
- 
-  bedroom_aircon:
-    name: Bedroom Aircon 
-    initial: off 
-    icon: mdi:car
-
-  office_aircon:
-    name: Office Aircon 
-    initial: off 
-    icon: mdi:car
-
-  office_dehumidifier:
-    name: Office DeHumidifier 
-    initial: off 
-    icon: mdi:car
-
-  guestroom_aircon:
-    name: Guestroom Aircon 
-    initial: off 
-    icon: mdi:car
-
-  tv:
-    name: TV
-    initial: off
-    icon: mdi:tv
-
 remote:
   - platform: harmony
     name: living room
-    host: !secret remote_host 
-
-automation:
-
-  - alias: Aircon ON 
-    trigger:
-      platform: state 
-      entity_id: input_boolean.aircon
-      to: 'on'
-    action:
-      service: remote.send_command
-      data_template:
-        entity_id: remote.living_room
-        command: Power ON 
-        device: !secret au_device_id_aircon 
-
-  - alias: Bedroom Aircon ON 
-    trigger:
-      platform: state 
-      entity_id: input_boolean.bedroom_aircon
-      to: 'on'
-    action:
-        service: script.turn_bedroom_aircon_on 
-
-  - alias: Bedroom Aircon OFF 
-    trigger:
-      platform: state 
-      entity_id: input_boolean.bedroom_aircon
-      to: 'off'
-    action:
-      service: climate.set_operation_mode 
-      entity_id: climate.bedroom_climate_control_cooling_1_8_2
-      data:
-        operation_mode: "Off" 
+    host: !secret remote_host
 
 
-  - alias: Office Aircon ON
-    trigger:
-      platform: state
-      entity_id: input_boolean.office_aircon
-      to: 'on'
-    action:
-      service: script.turn_office_aircon_on 
-
-  - alias: Office Dehumidifier ON
-    trigger:
-      platform: state
-      entity_id: input_boolean.office_dehumidifer
-      to: 'on'
-    action:
-      service: script.turn_office_dehumidifier_on
-
-
-  - alias: Office Aircon OFF
-    trigger:
-      platform: state
-      entity_id: input_boolean.office_aircon
-      to: 'off'
-    action:
-      service: climate.set_operation_mode
-      entity_id: climate.office_climate_control_cooling_1_9_2 
-      data:
-        operation_mode: "Off"
-
-  - alias: Office Dehumidifier OFF 
-    trigger:
-      platform: state
-      entity_id: input_boolean.office_dehumidifer
-      to: 'off'
-    action:
-      service: script.turn_office_dehumidifier_off
-
-  - alias: Guestroom Aircon ON
-    trigger:
-      platform: state
-      entity_id: input_boolean.guestroom_aircon
-      to: 'on'
-    action:
-        service: script.turn_guestroom_aircon_on 
-
-  - alias: Guestroom Aircon OFF
-    trigger:
-      platform: state
-      entity_id: input_boolean.guestroom_aircon
-      to: 'off'
-    action:
-      service: climate.set_operation_mode
-      entity_id: climate.guestroom_climate_control_cooling_1_12_2 
-      data:
-        operation_mode: "Off"
-
-
-  - alias: Aircon OFF 
-    trigger:
-      platform: state 
-      entity_id: input_boolean.aircon
-      to: 'off'
-    action:
-      service: remote.send_command
-      data_template:
-        entity_id: remote.living_room
-        command: Power OFF 
-        device: !secret au_device_id_aircon 
-
-
-  - alias: Fan ON 
-    trigger:
-      platform: state 
-      entity_id: input_boolean.fan
-      to: 'on'
-    action:
-      service: remote.send_command
-      data_template:
-        entity_id: remote.living_room
-        command: PowerToggle
-        device: !secret au_device_id_fan 
- 
-
-  - alias: Fan OFF 
-    trigger:
-      platform: state 
-      entity_id: input_boolean.fan
-      to: 'off'
-    action:
-      service: remote.send_command
-      data_template:
-        entity_id: remote.living_room
-        command: PowerToggle
-        device: !secret au_device_id_fan 
-
-  - alias: Tv ON 
-    trigger:
-      platform: state 
-      entity_id: input_boolean.tv
-      to: 'on'
-    action:
-      service: remote.send_command
-      data_template:
-        entity_id: remote.living_room
-        command: PowerOn
-        device: !secret au_device_id_tv 
- 
-
-  - alias: Tv OFF 
-    trigger:
-      platform: state 
-      entity_id: input_boolean.tv
-      to: 'off'
-    action:
-      service: remote.send_command
-      data_template:
-        entity_id: remote.living_room
-        command: PowerOff
-        device: !secret au_device_id_tv 
-
-  - alias: Door Entry
-    trigger:
-      platform: state
-      entity_id: sensor.living_room_door_entry
-      to: 'Open' 
-    condition:
-      - condition: state
-        entity_id: sun.sun
-        state: 'below_horizon'
-    action:
-      service: script.turn_living_room_lights_on 
-
-
-  - alias: Living Room Lights ON
-    trigger:
-      platform: state
-      entity_id: sensor.living_room_motion
-      state: 'Burglar'
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: sun.sun
-          state: 'below_horizon'
-        - condition: state
-          entity_id: input_boolean.motion_detection
-          state: 'on'
-    action:
-      service: homeassistant.turn_on
-      data:
-        entity_id: light.living_room_ceiling_light_1_level_3_0
-
-  - alias: Turn off Living room lights after 10 mins no motion
-    trigger:
-      platform: state
-      entity_id: sensor.living_room_motion
-      state: 'Off'
-      for:
-        minutes: 10
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: sun.sun
-          state: 'below_horizon'
-        - condition: state
-          entity_id: input_boolean.motion_detection
-          state: 'on'
-    action:
-      service: homeassistant.turn_off
-      entity_id: light.living_room_ceiling_light_1_level_3_0
 
 zwave:
  usb_path: /dev/ttyACM0
@@ -348,7 +92,9 @@ logger:
   default: info 
 
 recorder:
-  purge_days: 2
+  db_url: !secret mysql_url
+  purge_days: 5
+
 
 device_tracker:
   - platform: !secret dev_tracker_platform 
@@ -361,6 +107,17 @@ device_tracker:
 
   - platform: owntracks
 
+
+proximity:
+  home:
+    ignored_zones:
+      - Work
+    devices:
+      - device_tracker.dima_i7phone
+    tolerance: 50
+    unit_of_measurement: km
+
+
 mqtt:
   broker: !secret mqtt_broker 
   port: !secret mqtt_broker_port 
@@ -369,11 +126,13 @@ mqtt:
 
  customize: !include includes/customise.yaml
 
+input_boolean: !include includes/input_boolean.yaml
+automation: !include includes/automations/automation.yaml
 group: !include groups.yaml
 
 script: !include_dir_merge_list includes/scripts
 
 sensor: !include_dir_merge_list includes/sensors
 
-#zone:  !include includes/zone.yaml
+zone:  !include includes/zone.yaml
 

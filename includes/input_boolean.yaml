@@ -1,0 +1,50 @@
+  motion_detection:
+    name: Motion Detection
+    initial: on
+    icon: mdi:car
+
+  follow_me_lights:
+    name: Follow Me Lights
+    initial: off
+    icon: mdi:car
+
+  play_sound:
+    name: Play Sound
+    initial: off
+    icon: mdi:car
+  fan:
+    name: Fan
+    initial: off
+    icon: mdi:car
+
+  aircon:
+    name: Aircon
+    initial: off
+    icon: mdi:car
+
+  bedroom_aircon:
+    name: Bedroom Aircon
+    initial: off
+    icon: mdi:car
+
+  office_aircon:
+    name: Office Aircon
+    initial: off
+    icon: mdi:car
+
+  office_dehumidifier:
+    name: Office DeHumidifier
+    initial: off
+    icon: mdi:car
+
+  guestroom_aircon:
+    name: Guestroom Aircon
+    initial: off
+    icon: mdi:car
+
+  tv:
+    name: TV
+    initial: off
+    icon: mdi:tv
+
+
