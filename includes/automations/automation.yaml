@@ -1,3 +1,65 @@
+  - alias: Eillen Comes Home
+    trigger:
+      platform: state
+      entity_id: device_tracker.iphone
+      from: 'not_home'
+      to: 'home'
+    action:
+      service: notify.ios_i7phone
+      data:
+        message: 'Babes came home'
+        data:
+          push:
+            badge: 5
+            category: TEST_ALARM
+
+  - alias: Eillen Left Home
+    trigger:
+      platform: state
+      entity_id: device_tracker.iphone
+      from: 'home'
+      to: 'not_home'
+    action:
+      service: notify.ios_i7phone
+      data:
+        message: 'Babes left home recently'
+        data:
+          push:
+            badge: 5
+            category: TEST_ALARM
+
+
+  - alias: Cleaner Arrives
+    trigger:
+      platform: state
+      entity_id: device_tracker.galaxynote5
+      from: 'not_home'
+      to: 'home'
+    action:
+      service: notify.ios_i7phone
+      data:
+        message: 'Sharon Cleaner Arrived'
+        data:
+          push:
+            badge: 5
+            category: TEST_ALARM
+
+  - alias: Cleaner Left
+    trigger:
+      platform: state
+      entity_id: device_tracker.galaxynote5
+      from: 'home'
+      to: 'not_home'
+    action:
+      service: notify.ios_i7phone
+      data:
+        message: 'Sharon Cleaner Recently Left'
+        data:
+          push:
+            badge: 5
+            category: TEST_ALARM
+
+
 
   - alias: Aircon ON
     trigger:
