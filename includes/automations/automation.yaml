@@ -1,4 +1,17 @@
-  - alias: Eillen Comes Home
+ - alias: 'Test TV Notification'
+    trigger:
+     platform: state
+      entity_id: device_tracker.iphone
+      from: 'someplace'
+      to: 'someplace'
+    action:
+      service: notify.LivingTv
+      data:
+        title: "Wind Alert"
+        message: "It's Windy!"
+
+
+  - alias: ET Comes Home
     trigger:
       platform: state
       entity_id: device_tracker.iphone
@@ -7,13 +20,13 @@
     action:
       service: notify.ios_i7phone
       data:
-        message: 'Babes came home'
+        message: 'ET is home'
         data:
           push:
             badge: 5
             category: TEST_ALARM
 
-  - alias: Eillen Left Home
+  - alias: ET Left Home
     trigger:
       platform: state
       entity_id: device_tracker.iphone
@@ -22,7 +35,7 @@
     action:
       service: notify.ios_i7phone
       data:
-        message: 'Babes left home recently'
+        message: 'ET left home'
         data:
           push:
             badge: 5
@@ -38,7 +51,7 @@
     action:
       service: notify.ios_i7phone
       data:
-        message: 'Sharon Cleaner Arrived'
+        message: 'Cleaner Arrived'
         data:
           push:
             badge: 5
@@ -53,7 +66,7 @@
     action:
       service: notify.ios_i7phone
       data:
-        message: 'Sharon Cleaner Recently Left'
+        message: 'Cleaner Left Home'
         data:
           push:
             badge: 5

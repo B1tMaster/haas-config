@@ -21,7 +21,20 @@ updater:
 
 
 media_player:
-  platform: sonos 
+  - platform: sonos
+
+  - platform: braviatv
+    host: !secret android_tv_ip
+    name: TV
+
+notify:
+  - platform: nfandroidtv
+    name: LivingTv
+    host: !secret android_tv_ip
+    interrupt: 0
+    transparency: 20%
+    position: bottom-right
+
 
 
 # Discover some devices automatically
