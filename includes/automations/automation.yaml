@@ -72,6 +72,35 @@
             badge: 5
             category: TEST_ALARM
 
+  - alias: Dog Walker Arrived
+    trigger:
+      platform: state
+      entity_id: device_tracker.prioskasiphone
+      from: 'not_home'
+      to: 'home'
+    action:
+      service: notify.ios_i7phone
+      data:
+        message: 'Dog Wallker Arrived'
+        data:
+          push:
+            badge: 5
+            category: TEST_ALARM
+
+  - alias: Dog Walker Left Home
+    trigger:
+      platform: state
+      entity_id: device_tracker.prioskasiphone
+      from: 'home'
+      to: 'not_home'
+    action:
+      service: notify.ios_i7phone
+      data:
+        message: 'Dog Walker left house recently'
+        data:
+          push:
+            badge: 5
+            category: TEST_ALARM
 
 
   - alias: Aircon ON
@@ -276,3 +305,43 @@
     action:
       service: homeassistant.turn_off
       entity_id: light.living_room_ceiling_light_1_level_3_0
+
+  - alias: BedRoom Lights ON
+    trigger:
+      platform: state
+      entity_id: sensor.bedroom_motion
+      state: 'Burglar'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: 'below_horizon'
+        - condition: state
+          entity_id: input_boolean.motion_detection
+          state: 'on'
+    action:
+      service: homeassistant.turn_on
+      data:
+        entity_id: light.bedroom_ceiling_light_1_level_5_0
+
+  - alias: Turn off Bedroom room lights after 2 mins no motion
+    trigger:
+      platform: state
+      entity_id: sensor.bedroom_motion
+      state: 'Off'
+      for:
+        minutes: 2
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: 'below_horizon'
+        - condition: state
+          entity_id: input_boolean.motion_detection
+          state: 'on'
+    action:
+      service: homeassistant.turn_off
+      entity_id: light.bedroom_ceiling_light_1_level_5_0
+

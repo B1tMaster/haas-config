@@ -7,4 +7,7 @@ zwcfg_0xec7d149e.xml
 known_devices.yaml
 ios.conf
 
-
+.idea/haas-config.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/workspace.xml
