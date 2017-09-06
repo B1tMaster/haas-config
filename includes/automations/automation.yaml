@@ -1,3 +1,16 @@
+ - alias: 'Dexter Pee call'
+    trigger:
+      platform: mqtt
+      topic: iot/button/dexter/pee
+    action:
+      service: notify.ios_i7phone
+      data:
+        message: 'Daddy. I want to go pee.'
+        data:
+          push:
+            badge: 5
+            category: TEST_ALARM
+
  - alias: 'Test TV Notification'
     trigger:
      platform: state
@@ -262,7 +275,7 @@
     condition:
       - condition: state
         entity_id: sun.sun
-        state: 'below_horizon'
+        to: 'below_horizon'
     action:
       service: script.turn_living_room_lights_on
 
@@ -277,10 +290,10 @@
       conditions:
         - condition: state
           entity_id: sun.sun
-          state: 'below_horizon'
+          to: 'below_horizon'
         - condition: state
           entity_id: input_boolean.motion_detection
-          state: 'on'
+          to: 'on'
     action:
       service: homeassistant.turn_on
       data:
@@ -290,7 +303,7 @@
     trigger:
       platform: state
       entity_id: sensor.living_room_motion
-      state: 'Off'
+      to: 'Off'
       for:
         minutes: 10
     condition:
@@ -298,10 +311,10 @@
       conditions:
         - condition: state
           entity_id: sun.sun
-          state: 'below_horizon'
+          to: 'below_horizon'
         - condition: state
           entity_id: input_boolean.motion_detection
-          state: 'on'
+          to: 'on'
     action:
       service: homeassistant.turn_off
       entity_id: light.living_room_ceiling_light_1_level_3_0
@@ -316,10 +329,10 @@
       conditions:
         - condition: state
           entity_id: sun.sun
-          state: 'below_horizon'
+          to: 'below_horizon'
         - condition: state
           entity_id: input_boolean.motion_detection
-          state: 'on'
+          to: 'on'
     action:
       service: homeassistant.turn_on
       data:
@@ -337,10 +350,10 @@
       conditions:
         - condition: state
           entity_id: sun.sun
-          state: 'below_horizon'
+          to: 'below_horizon'
         - condition: state
           entity_id: input_boolean.motion_detection
-          state: 'on'
+          to: 'on'
     action:
       service: homeassistant.turn_off
       entity_id: light.bedroom_ceiling_light_1_level_5_0
