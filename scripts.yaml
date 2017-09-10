@@ -1,0 +1,120 @@
+'1505013396084':
+  alias: test
+  sequence:
+  - alias: Just Testing
+    data: {}
+    service: homeassistant.turn_on
+
+
+dexter_pee_call:
+  alias: "Dexter Pee Action Script"
+  sequence:
+   - service: script.sonos_say
+     data:
+       sonos_entity: media_player.living_room
+       volume: 0.4
+       message: 'Daddy, I want to go pee'
+       delay: '00:00:03'
+
+sonos_say:
+  alias: "Sonos TTS script"
+  sequence:
+   - service: media_player.sonos_snapshot
+     data_template:
+       entity_id: "{{ sonos_entity }}"
+   - service: media_player.sonos_unjoin
+     data_template:
+       entity_id: "{{ sonos_entity }}"
+   - service: media_player.volume_set
+     data_template:
+       entity_id: "{{ sonos_entity }}"
+       volume_level: "{{ volume }}"
+   - service: tts.google_say
+     data_template:
+       entity_id: "{{ sonos_entity }}"
+       message: "{{ message }}"
+   - delay: "{{ delay }}"
+   - service: media_player.sonos_restore
+     data_template:
+       entity_id: "{{ sonos_entity }}"
+
+
+turn_living_room_lights_on:
+  sequence:
+   - service: homeassistant.turn_on
+     data:
+       entity_id: light.living_room_ceiling_light_1_level
+
+turn_office_dehumidifier_on:
+  sequence:
+   - service: climate.set_operation_mode
+     entity_id: climate.office_climate_control_cooling_1
+     data:
+       operation_mode: "Dry Air"
+
+turn_office_dehumidifier_off:
+  sequence:
+   - service: climate.set_operation_mode
+     entity_id: climate.office_climate_control_cooling_1
+     data:
+       operation_mode: "Off"
+
+turn_guestroom_aircon_on:
+  sequence:
+   - service: climate.set_operation_mode
+     entity_id: climate.guestroom_climate_control_cooling_1
+     data:
+       operation_mode: Cool
+   - delay:
+       seconds: 1
+   - service: climate.set_temperature
+     entity_id: climate.guestroom_climate_control_cooling_1
+     data:
+       temperature: 22
+   - delay:
+       seconds: 1
+   - service: climate.set_fan_mode
+     entity_id: climate.guestroom_climate_control_cooling_1
+     data:
+       fan_mode: "Auto Low"
+
+turn_office_aircon_on:
+  sequence:
+   - service: climate.set_operation_mode
+     entity_id: climate.office_climate_control_cooling_1
+     data:
+       operation_mode: Cool
+   - delay:
+       seconds: 1
+   - service: climate.set_temperature
+     entity_id: climate.office_climate_control_cooling_1
+     data:
+       temperature: 23
+   - delay:
+       seconds: 1
+   - service: climate.set_fan_mode
+     entity_id: climate.office_climate_control_cooling_1
+     data:
+       fan_mode: "Auto Low"
+
+
+
+turn_bedroom_aircon_on:
+  sequence:
+   - service: climate.set_operation_mode
+     entity_id: climate.bedroom_climate_control_cooling_1
+     data:
+       operation_mode: "Cool"
+   - delay:
+       seconds: 1
+   - service: climate.set_temperature
+     entity_id: climate.bedroom_climate_control_cooling_1
+     data:
+       temperature: 21
+   - delay:
+       seconds: 1
+   - service: climate.set_fan_mode
+     entity_id: climate.bedroom_climate_control_cooling_1
+     data:
+       fan_mode: "Auto High"
+
