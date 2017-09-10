@@ -1,4 +1,3 @@
-
 - platform: yr
   monitored_conditions:
     - windSpeed
@@ -10,7 +9,7 @@
     bedroom_motion:
         friendly_name: 'BedRoom Motion'
         value_template: >-
-          {%- if is_state("sensor.bedroom_multi_sensor_burglar_13_10", "8") -%}
+          {%- if is_state("sensor.bedroom_multi_sensor_burglar", "8") -%}
             Burglar
           {%- else -%}
             Off
@@ -20,18 +19,18 @@
     living_room_motion:
         friendly_name: 'Living Room Motion'
         value_template: >-
-          {%- if is_state("sensor.living_room_door_burglar_4_10", "8") -%}
-            Burglar 
+          {%- if is_state("sensor.living_room_door_burglar", "8") -%}
+            Burglar
           {%- else -%}
-            Off 
+            Off
           {%- endif -%}
 
     living_room_door_entry:
         friendly_name: 'Living Room Door'
         value_template: >-
-          {%- if is_state("sensor.living_room_door_access_control_4_9", "23") -%}
+          {%- if is_state("sensor.living_room_door_access_control", "23") -%}
             Closed
-          {%- elif is_state("sensor.living_room_door_access_control_4_9", "22") -%}
+          {%- elif is_state("sensor.living_room_door_access_control", "22") -%}
             Open
           {%- else -%}
             Unknown
@@ -40,8 +39,9 @@
     living_room_luminance:
         friendly_name: 'Living Room Luminance'
         value_template: >-
-          {%- if is_state("sensor.living_room_door_luminance_4_3", "2") -%}
-            Dark 
+          {%- if is_state("sensor.living_room_door_luminance", "2") -%}
+            Dark
           {%- else -%}
-            Off 
+            Off
           {%- endif -%}
+

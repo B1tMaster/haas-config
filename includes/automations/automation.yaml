@@ -1,28 +1,27 @@
- - alias: 'Dexter Pee call'
-   trigger:
-      platform: mqtt
-      topic: iot/button/dexter/pee
-   action:
-     service: notify.ios_i7phone
-     data:
-       message: 'Daddy. I want to go pee.'
-       data:
-         push:
-           badge: 5
-           category: TEST_ALARM
+- alias: 'Dexter Pee call'
+  trigger:
+    platform: mqtt
+    topic: iot/button/dexter/pee
+  action:
+    service: notify.ios_i7phone
+    data:
+      message: 'Daddy. I want to go pee.'
+      data:
+        push:
+          badge: 5
+          category: TEST_ALARM
 
- - alias: 'Test TV Notification'
-   trigger:
-     platform: state
-     entity_id: device_tracker.iphone
-     from: 'someplace'
-     to: 'someplace'
-   action:
-     service: notify.LivingTv
-     data:
-       title: "Wind Alert"
-       message: "It's Windy!"
-
+- alias: 'Test TV Notification'
+  trigger:
+    platform: state
+    entity_id: device_tracker.iphone
+    from: 'someplace'
+    to: 'someplace'
+  action:
+    service: notify.LivingTv
+    data:
+      title: "Wind Alert"
+      message: "It's Windy!"
 
 - alias: ET Comes Home
   trigger:
@@ -143,7 +142,7 @@
     to: 'off'
   action:
     service: climate.set_operation_mode
-    entity_id: climate.bedroom_climate_control_cooling_1_8_2
+    entity_id: climate.bedroom_climate_control_cooling_1
     data:
       operation_mode: "Off"
 
@@ -172,7 +171,7 @@
     to: 'off'
   action:
     service: climate.set_operation_mode
-    entity_id: climate.office_climate_control_cooling_1_9_2
+    entity_id: climate.office_climate_control_cooling_1
     data:
       operation_mode: "Off"
 
@@ -199,7 +198,7 @@
     to: 'off'
   action:
     service: climate.set_operation_mode
-    entity_id: climate.guestroom_climate_control_cooling_1_12_2
+    entity_id: climate.guestroom_climate_control_cooling_1
     data:
       operation_mode: "Off"
 
@@ -267,6 +266,7 @@
       command: PowerOff
       device: !secret au_device_id_tv
 
+
 - alias: Door Entry
   trigger:
     platform: state
@@ -275,7 +275,8 @@
   condition:
     - condition: state
       entity_id: sun.sun
-      to: 'below_horizon'
+      state: 'below_horizon'
+      #to: 'below_horizon'
   action:
     service: script.turn_living_room_lights_on
 
@@ -284,20 +285,22 @@
   trigger:
     platform: state
     entity_id: sensor.living_room_motion
-    state: 'Burglar'
+    to: 'Burglar'
   condition:
     condition: and
     conditions:
       - condition: state
         entity_id: sun.sun
-        to: 'below_horizon'
+        #to: 'below_horizon'
+        state: 'below_horizon'
       - condition: state
         entity_id: input_boolean.motion_detection
-        to: 'on'
+        #to: 'on'
+        state: 'on'
   action:
     service: homeassistant.turn_on
     data:
-      entity_id: light.living_room_ceiling_light_1_level_3_0
+      entity_id: light.living_room_ceiling_light_1_level
 
 - alias: Turn off Living room lights after 10 mins no motion
   trigger:
@@ -311,38 +314,38 @@
     conditions:
       - condition: state
         entity_id: sun.sun
-        to: 'below_horizon'
+        state: 'below_horizon'
       - condition: state
         entity_id: input_boolean.motion_detection
-        to: 'on'
+        state: 'on'
   action:
     service: homeassistant.turn_off
-    entity_id: light.living_room_ceiling_light_1_level_3_0
+    entity_id: switch.living_room_ceiling_light_1_switch
 
 - alias: BedRoom Lights ON
   trigger:
     platform: state
     entity_id: sensor.bedroom_motion
-    state: 'Burglar'
+    to: 'Burglar'
   condition:
     condition: and
     conditions:
       - condition: state
         entity_id: sun.sun
-        to: 'below_horizon'
+        state: 'below_horizon'
       - condition: state
         entity_id: input_boolean.motion_detection
-        to: 'on'
+        state: 'on'
   action:
     service: homeassistant.turn_on
     data:
-      entity_id: light.bedroom_ceiling_light_1_level_5_0
+      entity_id: switch.bedroom_ceiling_light_switch
 
 - alias: Turn off Bedroom room lights after 2 mins no motion
   trigger:
     platform: state
     entity_id: sensor.bedroom_motion
-    state: 'Off'
+    to: 'Off'
     for:
       minutes: 2
   condition:
@@ -350,11 +353,13 @@
     conditions:
       - condition: state
         entity_id: sun.sun
-        to: 'below_horizon'
+        state: 'below_horizon'
       - condition: state
         entity_id: input_boolean.motion_detection
-        to: 'on'
+        #to: 'on'
+        state: 'on'
   action:
     service: homeassistant.turn_off
-    entity_id: light.bedroom_ceiling_light_1_level_5_0
+    entity_id: switch.bedroom_ceiling_light_switch
+
 

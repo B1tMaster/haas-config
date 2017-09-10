@@ -1,5 +1,12 @@
 homeassistant:
+  name: Home
+  latitude: !secret latitude
+  longitude: !secret longitude
+  elevation: 0
+  unit_system: metric
+  time_zone: Asia/Singapore
 
+  customize: !include includes/customize_me.yaml
 
 # Show links to resources in log and frontend
 #introduction:
@@ -12,7 +19,7 @@ config:
 
 http:
   # Uncomment this to add a password (recommended!)
-  api_password: !secret ui_http_pi_password 
+  api_password: !secret ui_http_pi_password
   # Uncomment this if you are using SSL or running in Docker etc
   # base_url: example.duckdns.org:8123
 
@@ -36,7 +43,6 @@ notify:
     position: bottom-right
 
 
-
 # Discover some devices automatically
 #discovery:
 
@@ -55,8 +61,11 @@ sun:
 
 # Text to speech
 tts:
-  platform: google
-
+  - platform: google
+    language: en
+    cache: true
+    cache_dir: /tmp/tts
+    time_memory: 20000
 
 remote:
   - platform: harmony
@@ -67,10 +76,10 @@ remote:
 
 zwave:
  usb_path: /dev/ttyACM0
- config_path: !secret zwave_config_path 
+ config_path: !secret zwave_config_path
 
 emulated_hue:
-   host_ip: !secret emul_hue_host_ip 
+   host_ip: !secret emul_hue_host_ip
    listen_port: 80
    off_maps_to_on_domains:
      - script
@@ -82,7 +91,7 @@ emulated_hue:
 
 
 logger:
-  default: info 
+  default: info
 
 recorder:
   db_url: !secret mysql_url
@@ -90,10 +99,10 @@ recorder:
 
 
 device_tracker:
-  - platform: !secret dev_tracker_platform 
-    host: !secret dev_tracker_host 
-    username: !secret dev_tracker_username 
-    password: !secret dev_tracker_password 
+  - platform: !secret dev_tracker_platform
+    host: !secret dev_tracker_host
+    username: !secret dev_tracker_username
+    password: !secret dev_tracker_password
     interval_seconds: 10
     consider_home: 180
     track_new_devices: yes
@@ -110,20 +119,31 @@ proximity:
     tolerance: 50
     unit_of_measurement: km
 
+ios:
+  push:
+    categories:
+      - name: Alarm
+        identifier: 'ALARM'
+        actions:
+          - identifier: TEST_ALARM
+            title: 'Test Alarm'
+            activationMode: 'background'
+            authenticationRequired: yes
+            destructive: yes
+            behavior: 'default'
 
 mqtt:
-  broker: !secret mqtt_broker 
-  port: !secret mqtt_broker_port 
-  username: !secret mqtt_broker_username 
-  password: !secret mqtt_broker_password 
-
-customize: !include includes/customize.yaml
+  broker: !secret mqtt_broker
+  port: !secret mqtt_broker_port
+  username: !secret mqtt_broker_username
+  password: !secret mqtt_broker_password
 
 input_boolean: !include includes/input_boolean.yaml
 automation: !include includes/automations/automation.yaml
 group: !include groups.yaml
 
-script: !include_dir_merge_list includes/scripts
+script: !include scripts.yaml
+
 
 sensor: !include_dir_merge_list includes/sensors
 
