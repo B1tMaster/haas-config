@@ -5,6 +5,16 @@
     data: {}
     service: homeassistant.turn_on
 
+arrive_greetings:
+  alias: "Greetings on Arrival Home"
+  sequence:
+   - service: script.sonos_say
+     data:
+       sonos_entity: media_player.living_room
+       volume: 0.4
+       message: "{{speech_message}}"
+       delay: '00:00:03'
+
 
 dexter_pee_call:
   alias: "Dexter Pee Action Script"

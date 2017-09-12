@@ -1,9 +1,43 @@
+- alias: 'People Greeting'
+
+  trigger:
+    - platform: state
+      entity_id:
+        - device_tracker.dmitry
+       # - device_tracker.eileen
+       # - device_tracker.sharon
+
+      from: 'not_home'
+      to: 'home'
+      for: '00:02:00'
+
+  action:
+    - service: script.speech_engine
+      data_template:
+        personarriving: >
+          {% set person = trigger.entity_id.split('.')[1]|replace('_', ' ')%}
+          {%- macro greeting_sentence(person) -%}
+          {{ [
+          "Welcome back home " ~ person,
+          "Guess who is home?" ~ person +" is!",
+          person + " is now in the house.",
+          "Welcome Home " ~ person + ".  We have missed you. Or at least Dexter did.",
+          "Our home is now complete, Rest your head and relax your feet! Welcome Back " ~ person,
+          "Life is like a song, you’re back where you belong. Welcome home " ~ person,
+          "Hey there " ~ person + " Welcome Home!",
+          "Knock Knock. Who is There? "   ~ person +" is!",
+          person ~ "! You are home!",
+          "I know a secret! "  ~ person +" is home!"
+          ] | random }}
+          {%- endmacro -%}
+          "{{greeting_sentence(person)}}"
+
 - alias: 'Dexter Pee call'
   trigger:
     platform: mqtt
     topic: iot/button/dexter/pee
   action:
-    service: notify.ios_i7phone
+    service: notify.ios_dmitry
     data:
       message: 'Daddy. I want to go pee.'
       data:
@@ -14,7 +48,7 @@
 - alias: 'Test TV Notification'
   trigger:
     platform: state
-    entity_id: device_tracker.iphone
+    entity_id: device_tracker.dmitry
     from: 'someplace'
     to: 'someplace'
   action:
@@ -23,14 +57,14 @@
       title: "Wind Alert"
       message: "It's Windy!"
 
-- alias: ET Comes Home
+- alias: Eileen Comes Home
   trigger:
       platform: state
-      entity_id: device_tracker.iphone
+      entity_id: device_tracker.eileen
       from: 'not_home'
       to: 'home'
   action:
-     service: notify.ios_i7phone
+     service: notify.ios_dmitry
      data:
        message: 'ET is home'
        data:
@@ -38,14 +72,14 @@
            badge: 5
            category: TEST_ALARM
 
-- alias: ET Left Home
+- alias: Eileen Left Home
   trigger:
       platform: state
-      entity_id: device_tracker.iphone
+      entity_id: device_tracker.eileen
       from: 'home'
       to: 'not_home'
   action:
-     service: notify.ios_i7phone
+     service: notify.ios_dmitry
      data:
        message: 'ET left home'
        data:
@@ -57,11 +91,11 @@
 - alias: Cleaner Arrives
   trigger:
       platform: state
-      entity_id: device_tracker.galaxynote5
+      entity_id: device_tracker.sharon
       from: 'not_home'
       to: 'home'
   action:
-     service: notify.ios_i7phone
+     service: notify.ios_dmitry
      data:
        message: 'Cleaner Arrived'
        data:
@@ -72,11 +106,11 @@
 - alias: Cleaner Left
   trigger:
       platform: state
-      entity_id: device_tracker.galaxynote5
+      entity_id: device_tracker.sharon
       from: 'home'
       to: 'not_home'
   action:
-      service: notify.ios_i7phone
+      service: notify.ios_dmitry
       data:
         message: 'Cleaner Left Home'
         data:
@@ -87,11 +121,11 @@
 - alias: Dog Walker Arrived
   trigger:
     platform: state
-    entity_id: device_tracker.prioskasiphone
+    entity_id: device_tracker.prioska
     from: 'not_home'
     to: 'home'
   action:
-    service: notify.ios_i7phone
+    service: notify.ios_dmitry
     data:
       message: 'Dog Wallker Arrived'
       data:
@@ -102,11 +136,11 @@
 - alias: Dog Walker Left Home
   trigger:
     platform: state
-    entity_id: device_tracker.prioskasiphone
+    entity_id: device_tracker.prioska
     from: 'home'
     to: 'not_home'
   action:
-    service: notify.ios_i7phone
+    service: notify.ios_dmitry
     data:
       message: 'Dog Walker left house recently'
       data:
@@ -276,7 +310,6 @@
     - condition: state
       entity_id: sun.sun
       state: 'below_horizon'
-      #to: 'below_horizon'
   action:
     service: script.turn_living_room_lights_on
 
@@ -295,7 +328,6 @@
         state: 'below_horizon'
       - condition: state
         entity_id: input_boolean.motion_detection
-        #to: 'on'
         state: 'on'
   action:
     service: homeassistant.turn_on

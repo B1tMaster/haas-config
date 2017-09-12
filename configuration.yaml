@@ -115,7 +115,7 @@ proximity:
     ignored_zones:
       - Work
     devices:
-      - device_tracker.dima_i7phone
+      - device_tracker.dima_dmitry
     tolerance: 50
     unit_of_measurement: km
 
