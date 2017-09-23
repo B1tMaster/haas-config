@@ -5,9 +5,15 @@ harmony_living_room.conf
 OZW_Log*
 zwcfg_0xec7d149e.xml
 known_devices.yaml
-ios.conf
 
 .idea/haas-config.iml
 .idea/misc.xml
 .idea/modules.xml
 .idea/workspace.xml
+/ios.conf
+/secrets.yaml
+/bravia.conf
+/harmony_livingroom.conf
+/zwave_device_config.yaml
+/zwcfg_0xec7d149e.xml
+/zwscene.xml

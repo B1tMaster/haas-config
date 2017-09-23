@@ -6,6 +6,37 @@
 - platform: template
   sensors:
 
+    dmitry_tracker:
+        friendly_name: 'Dmitry Tracker'
+        value_template: >-
+          {%- if is_state('device_tracker.dmitry','home') -%}
+            arriving
+          {%- else -%}
+            away
+          {%- endif -%}
+
+    family_room_motion:
+        friendly_name: 'Family Room Motion'
+        value_template: >-
+          {%- if is_state("sensor.family_room_window_burglar", "8") -%}
+            Burglar
+          {%- else -%}
+            Off
+          {%- endif -%}
+
+    family_room_window_open:
+        friendly_name: 'Window'
+        value_template: >-
+          {%- if is_state("sensor.family_room_window_access_control", "23") -%}
+            Closed
+          {%- elif is_state("sensor.family_room_window_access_control", "22") -%}
+            Open
+          {%- else -%}
+            Unknown
+          {%- endif -%}
+
+
+
     bedroom_motion:
         friendly_name: 'BedRoom Motion'
         value_template: >-
@@ -44,4 +75,5 @@
           {%- else -%}
             Off
           {%- endif -%}
+
 

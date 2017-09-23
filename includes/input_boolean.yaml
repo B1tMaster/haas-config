@@ -1,3 +1,19 @@
+  dmitry_arriving:
+    name: Dmitry Arriving
+    initial: off
+    icon: mdi:account-key
+
+  eileen_arriving:
+    name: Eileen Arriving
+    initial: off
+    icon: mdi:account-key
+
+
+  dyson_fan:
+    name: Motion Detection
+    initial: on
+    icon: mdi:fan
+
   motion_detection:
     name: Motion Detection
     initial: on
@@ -6,41 +22,47 @@
   follow_me_lights:
     name: Follow Me Lights
     initial: off
-    icon: mdi:car
+    icon: mdi:lightbulb
 
   play_sound:
     name: Play Sound
     initial: off
     icon: mdi:car
+
   fan:
     name: Fan
     initial: off
-    icon: mdi:car
+    icon: mdi:fan
+
+  cube:
+    name: Cube
+    initial: off
+    icon: mdi:lightbulb-outline
 
   aircon:
     name: Aircon
     initial: off
-    icon: mdi:car
+    icon: mdi:fan
 
   bedroom_aircon:
     name: Bedroom Aircon
     initial: off
-    icon: mdi:car
+    icon: mdi:fan
 
   office_aircon:
     name: Office Aircon
     initial: off
-    icon: mdi:car
+    icon: mdi:fan
 
   office_dehumidifier:
     name: Office DeHumidifier
     initial: off
-    icon: mdi:car
+    icon: mdi:fan
 
   guestroom_aircon:
     name: Guestroom Aircon
     initial: off
-    icon: mdi:car
+    icon: mdi:fan
 
   tv:
     name: TV
