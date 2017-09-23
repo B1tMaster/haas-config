@@ -6,7 +6,8 @@ homeassistant:
   unit_system: metric
   time_zone: Asia/Singapore
 
-  customize: !include includes/customize_me.yaml
+  customize: !include customize.yaml
+  customize_glob: !include customize_glob.yaml
 
 # Show links to resources in log and frontend
 #introduction:
@@ -43,9 +44,9 @@ notify:
     position: bottom-right
 
 
+
 # Discover some devices automatically
 #discovery:
-
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
 
@@ -66,6 +67,15 @@ tts:
     cache: true
     cache_dir: /tmp/tts
     time_memory: 20000
+
+  - platform: yandextts
+    name: yandextts
+    api_key: !secret yandex_api_key
+    voice: oksana
+    speed: 0.8
+    emotion: good
+    lang: en-US
+
 
 remote:
   - platform: harmony
@@ -92,6 +102,10 @@ emulated_hue:
 
 logger:
   default: info
+  logs:
+    homeassistant.components.device_tracker: debug
+    homeassistant.components.script: debug
+
 
 recorder:
   db_url: !secret mysql_url
@@ -103,11 +117,11 @@ device_tracker:
     host: !secret dev_tracker_host
     username: !secret dev_tracker_username
     password: !secret dev_tracker_password
-    interval_seconds: 10
-    consider_home: 180
+    interval_seconds: 5
+    consider_home: 120
     track_new_devices: yes
 
-  - platform: owntracks
+#  - platform: owntracks
 
 
 proximity:
@@ -139,11 +153,10 @@ mqtt:
   password: !secret mqtt_broker_password
 
 input_boolean: !include includes/input_boolean.yaml
-automation: !include includes/automations/automation.yaml
+automation: !include automation.yaml
 group: !include groups.yaml
 
 script: !include scripts.yaml
-
 
 sensor: !include_dir_merge_list includes/sensors
 
