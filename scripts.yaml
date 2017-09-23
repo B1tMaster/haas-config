@@ -1,20 +1,12 @@
-'1505013396084':
-  alias: test
-  sequence:
-  - alias: Just Testing
-    data: {}
-    service: homeassistant.turn_on
-
 arrive_greetings:
   alias: "Greetings on Arrival Home"
   sequence:
    - service: script.sonos_say
-     data:
+     data_template:
        sonos_entity: media_player.living_room
        volume: 0.4
-       message: "{{speech_message}}"
-       delay: '00:00:03'
-
+       message: "{{ speech_message }}"
+       delay: '00:00:08'
 
 dexter_pee_call:
   alias: "Dexter Pee Action Script"
@@ -24,7 +16,7 @@ dexter_pee_call:
        sonos_entity: media_player.living_room
        volume: 0.4
        message: 'Daddy, I want to go pee'
-       delay: '00:00:03'
+       delay: '00:00:08'
 
 sonos_say:
   alias: "Sonos TTS script"
@@ -39,7 +31,8 @@ sonos_say:
      data_template:
        entity_id: "{{ sonos_entity }}"
        volume_level: "{{ volume }}"
-   - service: tts.google_say
+   - service: tts.yandextts_say
+   #- service: tts.google_say
      data_template:
        entity_id: "{{ sonos_entity }}"
        message: "{{ message }}"
@@ -88,6 +81,7 @@ turn_guestroom_aircon_on:
      data:
        fan_mode: "Auto Low"
 
+
 turn_office_aircon_on:
   sequence:
    - service: climate.set_operation_mode
@@ -127,4 +121,3 @@ turn_bedroom_aircon_on:
      entity_id: climate.bedroom_climate_control_cooling_1
      data:
        fan_mode: "Auto High"
-
