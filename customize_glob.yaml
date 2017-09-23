@@ -1,0 +1,77 @@
+"climate.bedroom_climate_control_heating*":
+   hidden: true
+   homebridge_hidden: true
+"climate.office_climate_control_heating*":
+   hidden: true
+   homebridge_hidden: true
+"climate.guestroom_climate_control_heating*":
+   hidden: true
+   homebridge_hidden: true
+"climate.bedroom_climate_control_unused_*":
+   hidden: true
+   homebridge_hidden: true
+"climate.office_climate_control_unused_*":
+   hidden: true
+   homebridge_hidden: true
+"climate.guestroom_climate_control_unused_*":
+   hidden: true
+   homebridge_hidden: true
+"sensor.bedroom_steps_led*":
+  hidden: true
+  homebridge_hidden: true
+
+"sensor.livingroom_steps_led*":
+  hidden: true
+  homebridge_hidden: true
+
+"light.family_room_ceiling_light*":
+  hidden: true
+  homebridge_hidden: true
+
+"sensor.family_room_window_access_control*":
+  hidden: true
+  homebridge_hidden: true
+
+"sensor.family_room_window_alarm_*":
+  hidden: true
+  homebridge_hidden: true
+
+"light.bedroom_ceiling_light*":
+  hidden: true
+  homebridge_hidden: true
+
+"light.bedroom_steps_led_level_*":
+  hidden: true
+  homebridge_hidden: true
+
+"light.living_room_tv_light_strip_level_*":
+  hidden: true
+  homebridge_hidden: true
+
+"light.living_room_steps_led_level_*":
+  hidden: true
+  homebridge_hidden: true
+
+"sensor.family_room_ceiling_light_*":
+  hidden: true
+  homebridge_hidden: true
+
+"sensor.living_room_ceiling_light_*":
+  hidden: true
+  homebridge_hidden: true
+
+"sensor.bedroom_ceiling_light_*":
+  hidden: true
+  homebridge_hidden: true
+
+"sensor.living_room_tv_light_strip_*":
+  hidden: true
+  homebridge_hidden: true
+
+"sensor.living_room_door_*":
+  hidden: true
+  homebridge_hidden: true
+
+"sensor.bedroom_multi_sensor_*":
+  hidden: true
+  homebridge_hidden: true
