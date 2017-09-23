@@ -1,3 +1,16 @@
+set_arrive_sensor:
+  alias: "Set status of Arrive sensor"
+  sequence:
+   - service: input_boolean.turn_on
+     data_template:
+       entity_id: {{ tracker}}
+   - delay:
+         minutes: 3
+   - service: input_boolean.turn_off
+     data_template:
+        entity_id: {{ tracker}}
+
+
 arrive_greetings:
   alias: "Greetings on Arrival Home"
   sequence:

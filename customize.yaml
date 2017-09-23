@@ -98,3 +98,11 @@ light.bedroom_ceiling_light_level:
   homebridge_hidden: true
 
 
+# control Room
+input_boolean.dmitry_arriving:
+  hidden: true
+  homebridge_hidden: true
+
+input_boolean.eileen_arriving:
+  hidden: true
+  homebridge_hidden: true

@@ -6,14 +6,25 @@
 - platform: template
   sensors:
 
-    dmitry_tracker:
-        friendly_name: 'Dmitry Tracker'
+    dmitry_arriving:
+        friendly_name: 'Dmitry Arriving'
         value_template: >-
-          {%- if is_state('device_tracker.dmitry','home') -%}
+          {%- if is_state('input_boolean.dmitry_arriving','on') -%}
             arriving
           {%- else -%}
-            away
+            N/A
           {%- endif -%}
+
+    eileen_arriving:
+        friendly_name: 'Eileen Arriving'
+        value_template: >-
+          {%- if is_state('input_boolean.eileen_arriving','on') -%}
+            arriving
+          {%- else -%}
+            N/A
+          {%- endif -%}
+
+
 
     family_room_motion:
         friendly_name: 'Family Room Motion'
