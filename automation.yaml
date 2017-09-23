@@ -1,36 +1,55 @@
-- alias: 'People Greeting'
-
+- alias: 'Dmitry Greeting'
   trigger:
     - platform: state
-      entity_id:
-        - device_tracker.dmitry
-       # - device_tracker.eileen
-       # - device_tracker.sharon
-
+      entity_id: device_tracker.dmitry 
       from: 'not_home'
       to: 'home'
-      for: '00:02:00'
-
+      for: 
+        seconds: 5 
   action:
-    - service: script.speech_engine
-      data_template:
-        personarriving: >
-          {% set person = trigger.entity_id.split('.')[1]|replace('_', ' ')%}
-          {%- macro greeting_sentence(person) -%}
-          {{ [
-          "Welcome back home " ~ person,
-          "Guess who is home?" ~ person +" is!",
-          person + " is now in the house.",
-          "Welcome Home " ~ person + ".  We have missed you. Or at least Dexter did.",
-          "Our home is now complete, Rest your head and relax your feet! Welcome Back " ~ person,
-          "Life is like a song, you’re back where you belong. Welcome home " ~ person,
-          "Hey there " ~ person + " Welcome Home!",
-          "Knock Knock. Who is There? "   ~ person +" is!",
-          person ~ "! You are home!",
-          "I know a secret! "  ~ person +" is home!"
-          ] | random }}
-          {%- endmacro -%}
-          "{{greeting_sentence(person)}}"
+     service: script.arrive_greetings
+     data_template:
+        speech_message: >
+           {% set person = 'Dimitriy' %}
+           {{ [
+           "Welcome back home " + person ,
+           "The king is back. Welcome " + person,
+           "Are you drunk? " + person,
+           "Why took so long daddy? Woof!",
+           "There he is.." + person,
+           person + "Life is like a song, you’re back where you belong.",
+           "Welcome Home!" + person
+           ] | random }}
+
+
+- alias: 'Eileen Greeting'
+  trigger:
+    - platform: state
+      entity_id: device_tracker.eileen
+      from: 'not_home'
+      to: 'home'
+      for: 
+        seconds: 5 
+  action:
+     service: script.arrive_greetings
+     data_template:
+        speech_message: >
+           {% set person = 'Eileen' %}
+           {{ [
+           "Welcome back home " + person ,
+           "I missed you mommy.. Woof.",
+           "I was about to be sad without you " + person ,
+           "Hello.. My tail is all wagging Mommy." ,
+           "Hope you had a good day " + person ,
+           "Good to have you back " + person ,
+           "How was your day " + person ,
+           "Guess who is home?" + person,
+           person + "is now in the house. Yaay!",
+           "Welcome Home Love. We have missed you. Or at least Dexter did.",
+           "Our home is now complete. Welcome Back " + person,
+           person + "Life is like a song, you’re back where you belong.",
+           "Welcome Home " + person
+           ] | random }}
 
 - alias: 'Dexter Pee call'
   trigger:
@@ -48,7 +67,7 @@
 - alias: 'Test TV Notification'
   trigger:
     platform: state
-    entity_id: device_tracker.dmitry
+    entity_id: device_tracker.eileen
     from: 'someplace'
     to: 'someplace'
   action:
@@ -57,7 +76,7 @@
       title: "Wind Alert"
       message: "It's Windy!"
 
-- alias: Eileen Comes Home
+- alias: ET Comes Home
   trigger:
       platform: state
       entity_id: device_tracker.eileen
@@ -72,7 +91,7 @@
            badge: 5
            category: TEST_ALARM
 
-- alias: Eileen Left Home
+- alias: ET Left Home
   trigger:
       platform: state
       entity_id: device_tracker.eileen
@@ -300,7 +319,6 @@
       command: PowerOff
       device: !secret au_device_id_tv
 
-
 - alias: Door Entry
   trigger:
     platform: state
@@ -324,7 +342,6 @@
     conditions:
       - condition: state
         entity_id: sun.sun
-        #to: 'below_horizon'
         state: 'below_horizon'
       - condition: state
         entity_id: input_boolean.motion_detection
@@ -353,6 +370,45 @@
   action:
     service: homeassistant.turn_off
     entity_id: switch.living_room_ceiling_light_1_switch
+
+
+- alias: Familiy  Room Lights ON
+  trigger:
+    platform: state
+    entity_id: sensor.family_room_motion
+    to: 'Burglar'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: sun.sun
+        state: 'below_horizon'
+      - condition: state
+        entity_id: input_boolean.motion_detection
+        state: 'on'
+  action:
+    service: homeassistant.turn_on
+    data:
+      entity_id: switch.family_room_ceiling_light_switch 
+
+- alias: Turn off Family room lights after 2 mins no motion
+  trigger:
+    platform: state
+    entity_id: sensor.family_room_motion
+    to: 'Off'
+    for:
+      minutes: 2 
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.motion_detection
+        state: 'on'
+  action:
+    service: homeassistant.turn_off
+    entity_id: switch.family_room_ceiling_light_switch 
+
+
 
 - alias: BedRoom Lights ON
   trigger:
