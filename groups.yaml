@@ -1,0 +1,11 @@
+living_room:
+  name: Living Room
+  entities:
+    - sensor.living_room_door
+    - media_player.living_room
+    - light.living_room_steps_led_level
+    - light.living_room_ceiling_light_1_level
+    - light.living_room_ceiling_light_2_level
+    - light.living_room_tv_light_strip_level
+    - switch.living_room_cube_switch
+
