@@ -68,13 +68,18 @@ climate.office_climate_control_cooling_1:
   homebridge_name: Ofice Aircon 
   friendly_name: Office Aircon 
 
-climate.office_lights_switch_2:
+switch.office_lights_switch_2:
   homebridge_name: Ofice Lights 
   friendly_name: Office Lights 
 
-climate.office_lights_switch_3:
+switch.office_lights_switch_3:
   homebridge_name: Ofice LED 
   friendly_name: Office LED 
+
+switch.office_lights_switch:
+  hidden: true
+  homebridge_hidden: true
+
 
 # Guestroom
 climate.guestroom_climate_control_cooling_1:
