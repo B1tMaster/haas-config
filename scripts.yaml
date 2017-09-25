@@ -61,6 +61,28 @@ turn_living_room_lights_on:
      data:
        entity_id: light.living_room_ceiling_light_1_level
 
+living_room_lights_on:
+  sequence:
+   - service: homeassistant.turn_on
+     data_template:
+       entity_id: >
+
+         {{ [
+           "light.living_room_ceiling_light_1_level",
+           "light.living_room_ceiling_light_2_level"
+            ] | random }}
+
+living_room_lights_off:
+  sequence:
+   - service: homeassistant.turn_off
+     data:
+       entity_id: light.living_room_ceiling_light_1_level
+   - service: homeassistant.turn_off
+     data:
+       entity_id: light.living_room_ceiling_light_2_level
+
+
+
 turn_office_dehumidifier_on:
   sequence:
    - service: climate.set_operation_mode

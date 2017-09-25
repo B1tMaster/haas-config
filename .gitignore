@@ -17,3 +17,4 @@ known_devices.yaml
 /zwave_device_config.yaml
 /zwcfg_0xec7d149e.xml
 /zwscene.xml
+/homebridge/config.json
