@@ -19,15 +19,13 @@
     platform: state
     entity_id: sensor.living_room_door_entry
     to: 'Open'
-  condition:
-    - condition: state
-      entity_id: sensor.dmitry_arriving
-      state: 'arriving'
   action:
-     service: script.arrive_greetings
-     data_template:
+    - wait_template: "{{ states('sensor.dmitry_arriving') == 'arriving' }}"
+      timeout: '00:01:00'
+    - service: script.arrive_greetings
+      data_template:
         speech_message: >
-           {% set person = 'Dimitriy' %}
+           {% set person = 'Dimitri' %}
            {{ [
            "Welcome back home " + person ,
            "The king is back. Welcome " + person,
@@ -44,13 +42,11 @@
     platform: state
     entity_id: sensor.living_room_door_entry
     to: 'Open'
-  condition:
-    - condition: state
-      entity_id: sensor.eileen_arriving
-      state: 'arriving'
   action:
-     service: script.arrive_greetings
-     data_template:
+    - wait_template: "{{ states('sensor.eileen_arriving') == 'arriving' }}"
+      timeout: 00:01:00
+    - service: script.arrive_greetings
+      data_template:
         speech_message: >
            {% set person = 'Eileen' %}
            {{ [
@@ -68,6 +64,9 @@
            person + "Life is like a song, you’re back where you belong.",
            "Welcome Home " + person
            ] | random }}
+
+
+
 
 - alias: 'Dexter Pee call'
   trigger:
