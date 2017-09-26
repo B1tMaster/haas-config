@@ -55,11 +55,6 @@ sonos_say:
        entity_id: "{{ sonos_entity }}"
 
 
-turn_living_room_lights_on:
-  sequence:
-   - service: homeassistant.turn_on
-     data:
-       entity_id: light.living_room_ceiling_light_1_level
 
 living_room_lights_on:
   sequence:
@@ -67,10 +62,18 @@ living_room_lights_on:
      data_template:
        entity_id: >
 
-         {{ [
+        {%- if is_state('light.living_room_ceiling_light_1_level','on') -%}
+            light.living_room_ceiling_light_1_level
+         {%- elif is_state("light.living_room_ceiling_light_2_level", "on") -%}
+            light.living_room_ceiling_light_2_level
+          {%- else -%}
+          {{ [
            "light.living_room_ceiling_light_1_level",
            "light.living_room_ceiling_light_2_level"
             ] | random }}
+          {%- endif -%}
+
+
 
 living_room_lights_off:
   sequence:
