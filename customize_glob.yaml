@@ -1,4 +1,6 @@
-sensor.bedroom_climate_control_
+"sensor.bedroom_climate_control_*":
+   hidden: true
+   homebridge_hidden: true
 
 "climate.bedroom_climate_control_heating*":
    hidden: true
