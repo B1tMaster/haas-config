@@ -439,12 +439,39 @@
       - condition: state
         entity_id: input_boolean.motion_detection
         state: 'on'
+      - condition: time
+        before: '23:59:58'
   action:
     service: homeassistant.turn_on
     data:
       entity_id: switch.bedroom_ceiling_light_switch
 
-- alias: Turn off Bedroom room lights after 2 mins no motion
+
+- alias: BedRoom LED ON
+  trigger:
+    platform: state
+    entity_id: sensor.bedroom_motion
+    to: 'Burglar'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: sun.sun
+        state: 'below_horizon'
+      - condition: state
+        entity_id: input_boolean.motion_detection
+        state: 'on'
+      - condition: time
+        after: '23:59:59'
+  action:
+    service: homeassistant.turn_on
+    data:
+      entity_id: light.bedroom_steps_led_level
+      brightness: 50
+
+
+
+- alias: Bedroom lights OFF after 2 mins no motion
   trigger:
     platform: state
     entity_id: sensor.bedroom_motion
@@ -459,10 +486,9 @@
         state: 'below_horizon'
       - condition: state
         entity_id: input_boolean.motion_detection
-        #to: 'on'
         state: 'on'
   action:
     service: homeassistant.turn_off
-    entity_id: switch.bedroom_ceiling_light_switch
+    entity_id: switch.bedroom_ceiling_light_switch, light.bedroom_steps_led_level
 
 
