@@ -13,7 +13,16 @@ media_player.bedroom:
 
 climate.bedroom_climate_control_cooling_1:
   homebridge_name: Bedroom Aircon 
-  friendly_name: Bedroom Aircon 
+  friendly_name: Bedroom Aircon
+
+light.bedroom_ceiling_light_level:
+  hidden: true
+  homebridge_hidden: true
+
+binary_sensor.bedroom_multi_sensor_sensor:
+  hidden: true
+  homebridge_hidden: true
+
 
 #Family Room
 
@@ -28,6 +37,21 @@ sensor.family_room_window:
 sensor.family_room_window_temperature:
   homebridge_name: Family Room Temp 
   friendly_name:   Family Room Temp 
+
+sensor.family_room_window_burglar:
+  homebridge_name: Family Room Motion
+  friendly_name:  Family Room Motion
+  hidden: true
+  homebridge_hidden: true
+
+binary_sensor.family_room_window_sensor:
+  hidden: true
+  homebridge_hidden: true
+
+sensor.family_room_window_sourcenodeid:
+  hidden: true
+  homebridge_hidden: true
+
 
 # Living Room
 sensor.living_room_door:
@@ -58,6 +82,18 @@ switch.living_room_cube_switch:
   homebridge_name: Cube 
   friendly_name: Cube 
 
+switch.living_room_ceiling_light_1_switch:
+  hidden: true
+  homebridge_hidden: true
+
+switch.living_room_ceiling_light_2_switch:
+  hidden: true
+  homebridge_hidden: true
+
+binary_sensor.bedroom_multi_sensor_sensor:
+  hidden: true
+  homebridge_hidden: true
+
 
 # Office
 media_player.study:
@@ -66,7 +102,8 @@ media_player.study:
 
 climate.office_climate_control_cooling_1:
   homebridge_name: Ofice Aircon 
-  friendly_name: Office Aircon 
+  friendly_name: Office Aircon
+  homebridge_hidden: true
 
 switch.office_lights_switch_2:
   homebridge_name: Ofice Lights 
@@ -80,27 +117,23 @@ switch.office_lights_switch:
   hidden: true
   homebridge_hidden: true
 
+sensor.office_climate_control_temperature:
+  homebridge_name: Office Temperature
+  friendly_name: Office Temperature
+
 
 # Guestroom
 climate.guestroom_climate_control_cooling_1:
   homebridge_name: Guestroom Aircon 
-  friendly_name: Guestroom Aircon 
-
-switch.living_room_ceiling_light_1_switch:
-  hidden: true
+  friendly_name: Guestroom Aircon
   homebridge_hidden: true
+
 
 sensor.guestroom_climate_control_temperature:
   homebridge_name: Guestroom Temp 
   friendly_name: Guestroom Temp 
-
-switch.living_room_ceiling_light_2_switch:
-  hidden: true
   homebridge_hidden: true
 
-light.bedroom_ceiling_light_level:
-  hidden: true
-  homebridge_hidden: true
 
 
 # control Room

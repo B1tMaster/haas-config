@@ -1,3 +1,5 @@
+sensor.bedroom_climate_control_
+
 "climate.bedroom_climate_control_heating*":
    hidden: true
    homebridge_hidden: true
@@ -73,5 +75,9 @@
   homebridge_hidden: true
 
 "sensor.bedroom_multi_sensor_*":
+  hidden: true
+  homebridge_hidden: true
+
+sensor.living_room_steps_led_*:
   hidden: true
   homebridge_hidden: true
