@@ -56,21 +56,44 @@ sonos_say:
 
 
 
+
+follow_me_lights_on:
+  sequence:
+   - service: homeassistant.turn_on
+     data_template:
+       entity_id: > {{ light_id }}
+
+   - service: switch.turn_off
+     data_template:
+       entity_id: >
+        {%- set light_remove =  [ light_id ]  %}
+        {%- set all_lights = ['switch.bedroom_ceiling_light_switch' , 'switch.family_room_ceiling_light_switch', 'switch.office_lights_switch_2' ] %}
+        {%- for light in all_lights if (light not in light_remove) -%}
+        {{light}}{% if not loop.last %}{{", "}}{% endif %}
+        {%- endfor -%}
+
+   - service: light.turn_off
+     data_template:
+       entity_id: >
+        {%- set light_remove =  [ light_id ]  %}
+        {%- set all_lights = ['light.living_room_ceiling_light_1_level', 'light.living_room_ceiling_light_2_level' ] %}
+        {%- for light in all_lights if (light not in light_remove) -%}
+        {{light}}{% if not loop.last %}{{", "}}{% endif %}
+        {%- endfor -%}
+
+
 living_room_lights_on:
   sequence:
    - service: homeassistant.turn_on
      data_template:
        entity_id: >
 
-        {%- if is_state('light.living_room_ceiling_light_1_level','on') -%}
+        {%- if is_state("light.living_room_ceiling_light_1_level","on") -%}
             light.living_room_ceiling_light_1_level
          {%- elif is_state("light.living_room_ceiling_light_2_level", "on") -%}
             light.living_room_ceiling_light_2_level
           {%- else -%}
-          {{ [
-           "light.living_room_ceiling_light_1_level",
-           "light.living_room_ceiling_light_2_level"
-            ] | random }}
+          {{ [ "light.living_room_ceiling_light_1_level","light.living_room_ceiling_light_2_level" ] | random }}
           {%- endif -%}
 
 
