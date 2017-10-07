@@ -6,11 +6,14 @@ homeassistant:
   unit_system: metric
   time_zone: Asia/Singapore
 
+  # Customization file
   customize: !include customize.yaml
   customize_glob: !include customize_glob.yaml
 
+hassio:
+
 # Show links to resources in log and frontend
-#introduction:
+introduction:
 
 # Enables the frontend
 frontend:
@@ -19,14 +22,20 @@ frontend:
 config:
 
 http:
-  # Uncomment this to add a password (recommended!)
   api_password: !secret ui_http_pi_password
-  # Uncomment this if you are using SSL or running in Docker etc
+  # Uncomment this to add a password (recommended!)
+  # api_password: PASSWORD
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
   # base_url: example.duckdns.org:8123
 
 # Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
 updater:
-
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
 
 media_player:
   - platform: sonos
@@ -47,10 +56,11 @@ notify:
 
 # Discover some devices automatically
 #discovery:
+
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
 
-# Enables support for tracking state changes over time.
+# Enables support for tracking state changes over time
 history:
 
 # View all events in a logbook
@@ -58,7 +68,6 @@ logbook:
 
 # Track the sun
 sun:
-
 
 # Text to speech
 tts:
@@ -84,9 +93,12 @@ remote:
 
 
 
+# Weather prediction
+sensor:
+  - platform: yr
+
 zwave:
- usb_path: /dev/ttyACM0
- config_path: !secret zwave_config_path
+  usb_path: /dev/ttyACM0
 
 emulated_hue:
    host_ip: !secret emul_hue_host_ip
@@ -100,18 +112,6 @@ emulated_hue:
      - switch
 
 
-logger:
-  default: info
-  logs:
-    homeassistant.components.device_tracker: debug
-    homeassistant.components.script: debug
-
-
-recorder:
-  db_url: !secret mysql_url
-  purge_days: 5
-
-
 device_tracker:
   - platform: !secret dev_tracker_platform
     host: !secret dev_tracker_host
@@ -122,7 +122,6 @@ device_tracker:
     track_new_devices: yes
 
 #  - platform: owntracks
-
 
 proximity:
   home:
@@ -137,10 +136,10 @@ ios:
   push:
     categories:
       - name: Alarm
-        identifier: 'ALARM'
+        identifier: 'TEST_ALARM'
         actions:
           - identifier: TEST_ALARM
-            title: 'Test Alarm'
+            title: 'HA Message'
             activationMode: 'background'
             authenticationRequired: yes
             destructive: yes
@@ -152,13 +151,10 @@ mqtt:
   username: !secret mqtt_broker_username
   password: !secret mqtt_broker_password
 
-input_boolean: !include includes/input_boolean.yaml
-automation: !include automation.yaml
-group: !include groups.yaml
-
-script: !include scripts.yaml
 
 sensor: !include_dir_merge_list includes/sensors
-
 zone:  !include includes/zone.yaml
-
+input_boolean: !include includes/input_boolean.yaml
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
