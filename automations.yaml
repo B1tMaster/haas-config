@@ -37,6 +37,7 @@
            ] | random }}
 
 
+
 - alias: 'Eileen Arrival Greeting'
   trigger:
     platform: state
@@ -52,6 +53,10 @@
            {{ [
            "Welcome back home " + person ,
            "I missed you mommy.. Woof.",
+           "Great to see you " + person ,
+           "Hope you had a great day " + person ,
+           "Family is happy to have you back " + person ,
+           "It is so lonelyy without you home " + person ,
            "I was about to be sad without you " + person ,
            "Hello.. My tail is all wagging Mommy." ,
            "Hope you had a good day " + person ,
@@ -64,7 +69,6 @@
            person + "Life is like a song, you’re back where you belong.",
            "Welcome Home " + person
            ] | random }}
-
 
 
 
@@ -402,9 +406,23 @@
         entity_id: input_boolean.motion_detection
         state: 'on'
   action:
-    service: homeassistant.turn_on
-    data:
-      entity_id: switch.family_room_ceiling_light_switch 
+    service:  script.follow_me_lights_on
+    data_template:
+      light_id: switch.family_room_ceiling_light_switch
+
+
+  service_template: >
+      {% if is_state('input_boolean.follow_me_lights', 'on') %}
+       script.follow_me_lights_on
+       data:
+          light_id: switch.family_room_ceiling_light_switch
+    {% else %}
+       homeassistant.turn_on
+       data:
+         entity_id: switch.family_room_ceiling_light_switch
+    {% endif %}
+
+
 
 - alias: Turn off Family room lights after 2 mins no motion
   trigger:
@@ -442,9 +460,9 @@
       - condition: time
         before: '23:59:58'
   action:
-    service: homeassistant.turn_on
-    data:
-      entity_id: switch.bedroom_ceiling_light_switch
+   service:  script.follow_me_lights_on
+   data_template:
+      light_id: switch.bedroom_ceiling_light_switch
 
 
 - alias: BedRoom LED ON
