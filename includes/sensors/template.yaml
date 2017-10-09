@@ -6,10 +6,20 @@
 - platform: template
   sensors:
 
+    eveybody_home:
+        friendly_name: 'Everyone Home'
+        value_template: >-
+          {% if is_state("device_tracker.dmitry", "home") and  is_state("device_tracker.eileen", "home") -%}
+            everybody
+          {% elif is_state("device_tracker.dmitry", "home") or  is_state("device_tracker.eileen", "home") -%}
+            somebody
+          {%- else -%}
+            nobody
+          {%- endif -%}
+
 
     dmitry_arriving:
         friendly_name: 'Dmitry Arriving'
-        device_class: occupancy
         value_template: >-
           {%- if is_state('input_boolean.dmitry_arriving','on') -%}
             arriving
@@ -19,7 +29,6 @@
 
     eileen_arriving:
         friendly_name: 'Eileen Arriving'
-        device_class: occupancy
         value_template: >-
           {%- if is_state('input_boolean.eileen_arriving','on') -%}
             arriving
@@ -31,7 +40,6 @@
 
     family_room_motion:
         friendly_name: 'Family Room Motion'
-        device_class: motion
         value_template: >-
           {%- if is_state("sensor.family_room_window_burglar", "8") -%}
             Burglar
@@ -41,7 +49,6 @@
 
     family_room_window_open:
         friendly_name: 'Window'
-        device_class: opening
         value_template: >-
           {%- if is_state("sensor.family_room_window_access_control", "23") -%}
             Closed
@@ -55,7 +62,6 @@
 
     bedroom_motion:
         friendly_name: 'BedRoom Motion'
-        device_class: motion
         value_template: >-
           {%- if is_state("sensor.bedroom_multi_sensor_burglar", "8") -%}
             Burglar
@@ -66,7 +72,6 @@
 
     living_room_motion:
         friendly_name: 'Living Room Motion'
-        device_class: motion
         value_template: >-
           {%- if is_state("sensor.living_room_door_burglar", "8") -%}
             Burglar
@@ -76,7 +81,6 @@
 
     living_room_door_entry:
         friendly_name: 'Living Room Door'
-        device_class: opening
         value_template: >-
           {%- if is_state("sensor.living_room_door_access_control", "23") -%}
             Closed
@@ -88,7 +92,6 @@
 
     living_room_luminance:
         friendly_name: 'Living Room Luminance'
-        device_class: light
         value_template: >-
           {%- if is_state("sensor.living_room_door_luminance", "2") -%}
             Dark

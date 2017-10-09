@@ -1,3 +1,24 @@
+- alias: 'Follow Me Lights Mode On'
+  trigger:
+    platform: state
+    entity_id: sensor.eveybody_home
+    to: 'somebody'
+  action:
+    service: input_boolean.turn_on
+    data:
+      entity_id: input_boolean.follow_me_lights
+
+- alias: 'Follow Me Lights Mode Off'
+  trigger:
+    platform: state
+    entity_id: sensor.eveybody_home
+    to: 'everybody'
+  action:
+    service: input_boolean.turn_off
+    data:
+      entity_id: input_boolean.follow_me_lights
+
+
 - alias: 'Arriving Home'
   trigger:
     - platform: state

@@ -10,8 +10,8 @@
 
 
   dyson_fan:
-    name: Motion Detection
-    initial: on
+    name: Dyson Fan
+    initial: off
     icon: mdi:fan
 
   motion_detection:
