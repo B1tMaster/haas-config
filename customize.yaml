@@ -45,11 +45,11 @@ sensor.family_room_window_temperature:
 sensor.family_room_window_burglar:
   homebridge_name: Family Room Motion
   friendly_name:  Family Room Motion
-  hidden: true
+  hidden: false
   homebridge_hidden: true
 
 binary_sensor.family_room_window_sensor:
-  hidden: true
+  hidden: false
   homebridge_hidden: true
 
 sensor.family_room_window_sourcenodeid:

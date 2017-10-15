@@ -56,6 +56,9 @@
            person + "Life is like a song, you’re back where you belong.",
            "Welcome Home!" + person
            ] | random }}
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.dmitry_arriving
 
 
 
@@ -90,6 +93,9 @@
            person + "Life is like a song, you’re back where you belong.",
            "Welcome Home " + person
            ] | random }}
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.eileen_arriving
 
 
 

@@ -1,18 +1,44 @@
+  lobby_motion:
+    name: Lobby Motion
+    initial: off
+    icon: mdi:waves
+
+  omna_motion:
+    name: Lobby Motion
+    initial: off
+    icon: mdi:waves
+
+  eileen_at_work:
+    name: Eileen Working
+    initial: off
+    icon: mdi:account-key
+
+  dmitry_at_work:
+    name: Dmitry Working
+    initial: off
+    icon: mdi:account-key
+
+  eileen_arriving_soon:
+    name: Eileen Arriving Soon
+    initial: off
+    icon: mdi:account-key
+
+  dmitry_arriving_soon:
+    name: Dmitry Arriving Soon
+    initial: off
+    icon: mdi:account-key
+
   dmitry_arriving:
     name: Dmitry Arriving
     initial: off
     icon: mdi:account-key
+
 
   eileen_arriving:
     name: Eileen Arriving
     initial: off
     icon: mdi:account-key
 
-
-  dyson_fan:
-    name: Dyson Fan
-    initial: off
-    icon: mdi:fan
 
   motion_detection:
     name: Motion Detection
