@@ -4,7 +4,7 @@
     icon: mdi:waves
 
   omna_motion:
-    name: Lobby Motion
+    name: Omna Motion
     initial: off
     icon: mdi:waves
 
