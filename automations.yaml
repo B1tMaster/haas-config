@@ -438,19 +438,6 @@
       light_id: switch.family_room_ceiling_light_switch
 
 
-   service_template: >
-      {% if is_state('input_boolean.follow_me_lights', 'on') %}
-       script.follow_me_lights_on
-      data:
-        light_id: switch.family_room_ceiling_light_switch
-      {% else %}
-       homeassistant.turn_on
-      data:
-        entity_id: switch.family_room_ceiling_light_switch
-      {% endif %}
-
-
-
 - alias: Turn off Family room lights after 2 mins no motion
   trigger:
     platform: state
@@ -485,7 +472,8 @@
         entity_id: input_boolean.motion_detection
         state: 'on'
       - condition: time
-        before: '23:59:58'
+        before: '23:45:58'
+        after: '19:00:00'
   action:
    service:  script.follow_me_lights_on
    data_template:
@@ -507,7 +495,8 @@
         entity_id: input_boolean.motion_detection
         state: 'on'
       - condition: time
-        after: '23:59:59'
+         after: '23:45:59'
+         before: '06:30:00'
   action:
     service: homeassistant.turn_on
     data:
