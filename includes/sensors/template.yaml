@@ -1,7 +1,10 @@
-- platform: yr
+- platform: wunderground
+  api_key: !secret wunder_api_key
+  pws_id: !secret  wunder_station_id
   monitored_conditions:
-    - windSpeed
-    - windDirection
+    - wind_kph
+    - wind_dir
+    - wind_gust_kph
 
 - platform: template
   sensors:
