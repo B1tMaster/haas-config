@@ -120,12 +120,13 @@
       data_template:
         wind_message: >
           {% set person = 'Dimitri' %}
+          {% set wind = "{{ states.sensor.pws_wind_kph.state }}" %}
           {{ [
-           "Maybe time to go foiling " + person,
+           "Maybe time to go foiling. " + person ,
            "Seems windy " + person,
            "Are you ready to foil? " + person,
-           "Its Foiling Weather!" ,
-           "Would you rather not be foiling " + person,
+           "Its Foiling Weather!",
+           "Lets go foiling " + person,
            person + "Life is short, Go foil!",
            "I think its good for foiling!" + person
            ] | random }}
@@ -152,13 +153,14 @@
       data_template:
         wind_message: >
           {% set person = 'Dimitri' %}
+          {% set wind = "{{ states.sensor.pws_wind_kph.state }}" %}
           {{ [
            "Wow, it's nuking " + person,
            "Really windy now. " + person,
            "Lets go ride! " + person,
-           "Its twintip weather. Yay!" ,
+           "Its twintip weather. Yay!",
            person + ", quick, go ride.",
-           "Windy for a twintip! " + person
+           "Windy for twintip!" + person
            ] | random }}
 
 
