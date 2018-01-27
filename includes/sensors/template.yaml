@@ -9,6 +9,19 @@
 - platform: template
   sensors:
 
+     windy:
+        friendly_name: 'Wind'
+        icon_template: mdi:weather-windy
+        value_template: >-
+          {% if states.sensor.pws_wind_kph.state| float > 24.0 -%}
+            Twintip
+          {% elif states.sensor.pws_wind_kph.state| float >= 16.0 and states.sensor.pws_wind_kph.state| float <= 24.0    -%}
+            Hydrofoil
+          {%- else -%}
+            StayHome
+          {%- endif -%}
+
+
     eveybody_home:
         friendly_name: 'Everyone Home'
         value_template: >-

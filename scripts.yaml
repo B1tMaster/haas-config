@@ -55,6 +55,21 @@ sonos_say:
        entity_id: "{{ sonos_entity }}"
 
 
+send_wind_alert:
+  sequence:
+   - service: notify.ios_dmitry
+     data_template:
+       message: "{{ wind_message }}"
+       data:
+         push:
+           badge: 5
+           category: TEST_ALARM
+   - service: script.sonos_say
+     data_template:
+       sonos_entity: media_player.living_room
+       volume: 0.4
+       message: "{{ wind_message }}"
+       delay: '00:00:05'
 
 
 follow_me_lights_on:

@@ -98,6 +98,72 @@
         entity_id: input_boolean.eileen_arriving
 
 
+- alias: 'Kitesurf Foil Alert'
+  trigger:
+    platform: state
+    entity_id: sensor.windy
+    to: 'Hydrofoil'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: sun.sun
+        state: 'above_horizon'
+      - condition: state
+        entity_id: input_boolean.wind_alert
+        state: 'on'
+      - condition: time
+        before: '18:00:00'
+        after: '07:00:00'
+  action:
+    - service: script.send_wind_alert
+      data_template:
+        wind_message: >
+          {% set person = 'Dimitri' %}
+          {{ [
+           "Maybe time to go foiling " + person,
+           "Seems windy " + person,
+           "Are you ready to foil? " + person,
+           "Its Foiling Weather!" ,
+           "Would you rather not be foiling " + person,
+           person + "Life is short, Go foil!",
+           "I think its good for foiling!" + person
+           ] | random }}
+
+- alias: 'Kitesurf Twintip Alert'
+  trigger:
+    platform: state
+    entity_id: sensor.windy
+    to: 'Twintip'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: sun.sun
+        state: 'above_horizon'
+      - condition: state
+        entity_id: input_boolean.wind_alert
+        state: 'on'
+      - condition: time
+        before: '18:00:00'
+        after: '07:00:00'
+  action:
+    - service: script.send_wind_alert
+      data_template:
+        wind_message: >
+          {% set person = 'Dimitri' %}
+          {{ [
+           "Wow, it's nuking " + person,
+           "Really windy now. " + person,
+           "Lets go ride! " + person,
+           "Its twintip weather. Yay!" ,
+           person + ", quick, go ride.",
+           "Windy for a twintip! " + person
+           ] | random }}
+
+
+
+
 
 - alias: 'Dexter Pee call'
   trigger:

@@ -1,3 +1,8 @@
+   wind_alert:
+    name: Wind Alert
+    initial: on
+    icon: mdi:weather-windy
+
   lobby_motion:
     name: Lobby Motion
     initial: off
