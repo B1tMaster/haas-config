@@ -3,6 +3,11 @@
     initial: on
     icon: mdi:weather-windy
 
+  kitesurf_wind_request:
+    name: Beach Conditions Report
+    initial: off
+    icon: mdi:weather-windy
+
   lobby_motion:
     name: Lobby Motion
     initial: off

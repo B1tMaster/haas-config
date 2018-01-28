@@ -98,11 +98,11 @@
         entity_id: input_boolean.eileen_arriving
 
 
-- alias: 'Kitesurf Foil Alert'
+- alias: 'Kitesurf Text Alert'
   trigger:
     platform: state
     entity_id: sensor.windy
-    to: 'Hydrofoil'
+    to: 'Windy'
   condition:
     condition: and
     conditions:
@@ -113,29 +113,41 @@
         entity_id: input_boolean.wind_alert
         state: 'on'
       - condition: time
-        before: '18:00:00'
+        before: '19:00:00'
         after: '07:00:00'
   action:
     - service: script.send_wind_alert
       data_template:
-        wind_message: >
-          {% set person = 'Dimitri' %}
-          {% set wind = "{{ states.sensor.pws_wind_kph.state }}" %}
-          {{ [
-           "Maybe time to go foiling. " + person ,
-           "Seems windy " + person,
-           "Are you ready to foil? " + person,
-           "Its Foiling Weather!",
-           "Lets go foiling " + person,
-           person + "Life is short, Go foil!",
-           "I think its good for foiling!" + person
-           ] | random }}
+          wind_message: >
+            {% set wind = " {{ states.sensor.pws_wind_string.state }} " %}
+            {{ [
+             "Time to go foiling. Wind: " + wind ,
+             "Seems windy: " + wind,
+             "Ready to ride? " + wind,
+             "Its kitesurfing Weather: " + wind,
+             "Lets go foiling: " + wind,
+             "Go foil: " + wind,
+             "Good wind for kitesurfing! " + wind
+             ] | random }}
 
-- alias: 'Kitesurf Twintip Alert'
+
+- alias: Kitesurf Beach Report
+  trigger:
+    platform: state
+    entity_id: input_boolean.kitesurf_wind_request
+    to: 'on'
+  action:
+    - service: script.send_wind_alert
+      data_template:
+          wind_message: >
+            Current Wind: {{ states.sensor.pws_wind_string.state }}
+
+
+- alias: 'Kitesurf Voice Alert'
   trigger:
     platform: state
     entity_id: sensor.windy
-    to: 'Twintip'
+    to: 'Windy'
   condition:
     condition: and
     conditions:
@@ -146,24 +158,28 @@
         entity_id: input_boolean.wind_alert
         state: 'on'
       - condition: time
-        before: '18:00:00'
+        before: '19:00:00'
         after: '07:00:00'
+      - condition: state
+        entity_id: device_tracker.dmitry
+        state: 'home'
   action:
-    - service: script.send_wind_alert
+    - service: script.yandex_say
       data_template:
-        wind_message: >
-          {% set person = 'Dimitri' %}
-          {% set wind = "{{ states.sensor.pws_wind_kph.state }}" %}
-          {{ [
-           "Wow, it's nuking " + person,
-           "Really windy now. " + person,
-           "Lets go ride! " + person,
-           "Its twintip weather. Yay!",
-           person + ", quick, go ride.",
-           "Windy for twintip!" + person
+        sonos_entity: media_player.living_room
+        volume: 0.4
+        delay: '00:00:05'
+        message: >
+           {% set wind_txt = " {{ states.sensor.pws_wind_string.state }} " %}
+           {{ [
+           'Maybe time to go foiling.' ,
+           'Seems windy ' ,
+           'Are you ready to ride? ' ,
+           'Its kitesurfing Weather.' ,
+           'Lets go foiling ' ,
+           'Life is short, Go foil! ' ,
+           'I think its good for kitesurfing!'
            ] | random }}
-
-
 
 
 

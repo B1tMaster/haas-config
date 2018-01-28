@@ -31,6 +31,54 @@ dexter_pee_call:
        message: 'Daddy, I want to go pee'
        delay: '00:00:08'
 
+
+yandex_say:
+  alias: "Sonos TTS script"
+  sequence:
+   - service: media_player.sonos_snapshot
+     data_template:
+       entity_id: "{{ sonos_entity }}"
+   - service: media_player.sonos_unjoin
+     data_template:
+       entity_id: "{{ sonos_entity }}"
+   - service: media_player.volume_set
+     data_template:
+       entity_id: "{{ sonos_entity }}"
+       volume_level: "{{ volume }}"
+   - service: tts.yandextts_say
+     data_template:
+       entity_id: "{{ sonos_entity }}"
+       message: "{{ message }}"
+   - delay: "{{ delay }}"
+   - service: media_player.sonos_restore
+     data_template:
+       entity_id: "{{ sonos_entity }}"
+
+google_say:
+  alias: "Sonos TTS script"
+  sequence:
+   - service: media_player.sonos_snapshot
+     data_template:
+       entity_id: "{{ sonos_entity }}"
+   - service: media_player.sonos_unjoin
+     data_template:
+       entity_id: "{{ sonos_entity }}"
+   - service: media_player.volume_set
+     data_template:
+       entity_id: "{{ sonos_entity }}"
+       volume_level: "{{ volume }}"
+   - service: tts.google_say
+     data_template:
+       entity_id: "{{ sonos_entity }}"
+       message: "{{ message }}"
+   - delay: "{{ delay }}"
+   - service: media_player.sonos_restore
+     data_template:
+       entity_id: "{{ sonos_entity }}"
+
+
+
+
 sonos_say:
   alias: "Sonos TTS script"
   sequence:
@@ -64,12 +112,11 @@ send_wind_alert:
          push:
            badge: 5
            category: TEST_ALARM
-   - service: script.sonos_say
-     data_template:
-       sonos_entity: media_player.living_room
-       volume: 0.4
-       message: "{{ wind_message }}"
-       delay: '00:00:05'
+   - service: homeassistant.turn_off
+     data:
+       entity_id: input_boolean.kitesurf_wind_request
+
+
 
 
 follow_me_lights_on:
