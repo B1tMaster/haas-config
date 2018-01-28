@@ -7,6 +7,8 @@
     - wind_gust_kph
     - pressure_trend
     - wind_string
+    - weather_1h
+
 
 - platform: template
   sensors:

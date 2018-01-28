@@ -1,0 +1,8 @@
+
+Format for the FosCam to grab picture
+
+snapPicture2 - gives higher resolution
+https://192.168.11.34/cgi-bin/CGIProxy.fcgi?usr=foscam-admin&pwd=i8XQWc6Pnv55&cmd=snapPicture
+
+
+        #  {% set wind = '{{ sensor.pws_wind_kph.state }}' %}
