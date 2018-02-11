@@ -52,6 +52,9 @@ notify:
     transparency: 50%
     position: bottom-right
 
+  - platform: facebook
+    name: facebook_wind_alerts
+    page_access_token: !secret facebook_page_access_token
 
 
 # Discover some devices automatically
