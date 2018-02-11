@@ -661,10 +661,23 @@
     platform: state
     entity_id: sensor.windy
     to: 'Windy'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: sun.sun
+        state: 'above_horizon'
+      - condition: state
+        entity_id: input_boolean.wind_alert
+        state: 'on'
+      - condition: time
+        before: '19:00:00'
+        after: '07:00:00'
   action:
     service: notify.facebook_wind_alerts
     data_template:
      message: >
+
             {{ states.sensor.pws_wind_string.state }}
 
 
@@ -673,4 +686,4 @@
 
             Next Hour: {{ states.sensor.pws_weather_1h.state }}
      target:
-       - '+6598628012'
+       - !secret user1_phone
