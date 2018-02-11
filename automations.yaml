@@ -130,7 +130,6 @@
              "Good wind for kitesurfing! " + wind
              ] | random }}
 
-
 - alias: Kitesurf Beach Report
   trigger:
     platform: state
@@ -198,7 +197,7 @@
           badge: 5
           category: TEST_ALARM
 
-- alias: 'Test TV Notification'
+- alias: 'Dexter TV Pee Alert'
   trigger:
     platform: state
     entity_id: device_tracker.eileen
@@ -207,8 +206,8 @@
   action:
     service: notify.LivingTv
     data:
-      title: "Wind Alert"
-      message: "It's Windy!"
+      title: "Dexter Wee Alert"
+      message: "Daddy I want to go pee!"
 
 - alias: ET Comes Home
   trigger:
@@ -310,7 +309,7 @@
   action:
     service: remote.send_command
     data_template:
-      entity_id: remote.living_room
+      entity_id: remote.livingroom
       command: Power ON
       device: !secret au_device_id_aircon
 
@@ -398,7 +397,7 @@
   action:
     service: remote.send_command
     data_template:
-      entity_id: remote.living_room
+      entity_id: remote.livingroom
       command: Power OFF
       device: !secret au_device_id_aircon
 
@@ -411,7 +410,7 @@
   action:
     service: remote.send_command
     data_template:
-      entity_id: remote.living_room
+      entity_id: remote.livingroom
       command: PowerToggle
       device: !secret au_device_id_fan
 
@@ -424,7 +423,7 @@
   action:
     service: remote.send_command
     data_template:
-      entity_id: remote.living_room
+      entity_id: remote.livingroom
       command: PowerToggle
       device: !secret au_device_id_fan
 
@@ -436,7 +435,7 @@
   action:
     service: remote.send_command
     data_template:
-      entity_id: remote.living_room
+      entity_id: remote.livingroom
       command: PowerOn
       device: !secret au_device_id_tv
 
@@ -449,9 +448,55 @@
   action:
     service: remote.send_command
     data_template:
-      entity_id: remote.living_room
+      entity_id: remote.livingroom
       command: PowerOff
       device: !secret au_device_id_tv
+
+- alias: AppleTv ON Scrreen Saver
+  trigger:
+    platform: state
+    entity_id: input_boolean.apple_tv
+    to: 'on'
+  action:
+    service: script.turn_apple_tv_screensaver_on
+
+- alias: AppleTv OFF Scrreen Saver
+  trigger:
+    platform: state
+    entity_id: input_boolean.apple_tv
+    to: 'off'
+  action:
+    service: remote.send_command
+    data_template:
+      entity_id: remote.livingroom
+      command: PowerOff
+      device: !secret au_device_id_tv
+
+
+
+
+- alias: Sonos Activity Music ON
+  trigger:
+    platform: state
+    entity_id: input_boolean.Sonos_LivingRoom
+    to: 'on'
+  action:
+    service: remote.turn_on
+    entity_id: remote.living_room
+    data:
+      activity: 26463498
+      device: !secret au_device_id_sonos
+
+- alias: Sonos Activity Music OFF
+  trigger:
+    platform: state
+    entity_id: input_boolean.Sonos_LivingRoom
+    to: 'off'
+  action:
+    service: remote.turn_off
+    entity_id: remote.living_room
+
+
 
 - alias: Door Entry
   trigger:
@@ -530,7 +575,7 @@
     entity_id: sensor.family_room_motion
     to: 'Off'
     for:
-      minutes: 2 
+      minutes: 2
   condition:
     condition: and
     conditions:
@@ -539,7 +584,7 @@
         state: 'on'
   action:
     service: homeassistant.turn_off
-    entity_id: switch.family_room_ceiling_light_switch 
+    entity_id: switch.family_room_ceiling_light_switch
 
 
 
@@ -558,7 +603,7 @@
         entity_id: input_boolean.motion_detection
         state: 'on'
       - condition: time
-        before: '23:45:58'
+        before: '23:59:58'
         after: '19:00:00'
   action:
    service:  script.follow_me_lights_on
@@ -581,8 +626,8 @@
         entity_id: input_boolean.motion_detection
         state: 'on'
       - condition: time
-         after: '23:45:59'
-         before: '06:30:00'
+        after: '23:45:59'
+        before: '06:30:00'
   action:
     service: homeassistant.turn_on
     data:
@@ -610,5 +655,3 @@
   action:
     service: homeassistant.turn_off
     entity_id: switch.bedroom_ceiling_light_switch, light.bedroom_steps_led_level
-
-

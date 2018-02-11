@@ -3,13 +3,12 @@ set_arrive_sensor:
   sequence:
    - service: input_boolean.turn_on
      data_template:
-       entity_id: {{ tracker}}
+       entity_id: "{{ tracker }}"
    - delay:
-         minutes: 3
+         minutes: 1
    - service: input_boolean.turn_off
      data_template:
-        entity_id: {{ tracker}}
-
+        entity_id: "{{ tracker }}"
 
 arrive_greetings:
   alias: "Greetings on Arrival Home"
@@ -30,7 +29,6 @@ dexter_pee_call:
        volume: 0.4
        message: 'Daddy, I want to go pee'
        delay: '00:00:08'
-
 
 yandex_say:
   alias: "Sonos TTS script"
@@ -77,8 +75,6 @@ google_say:
        entity_id: "{{ sonos_entity }}"
 
 
-
-
 sonos_say:
   alias: "Sonos TTS script"
   sequence:
@@ -92,8 +88,8 @@ sonos_say:
      data_template:
        entity_id: "{{ sonos_entity }}"
        volume_level: "{{ volume }}"
-   - service: tts.yandextts_say
-   #- service: tts.google_say
+   #- service: tts.yandextts_say
+   - service: tts.google_say
      data_template:
        entity_id: "{{ sonos_entity }}"
        message: "{{ message }}"
@@ -101,7 +97,6 @@ sonos_say:
    - service: media_player.sonos_restore
      data_template:
        entity_id: "{{ sonos_entity }}"
-
 
 send_wind_alert:
   sequence:
@@ -115,8 +110,6 @@ send_wind_alert:
    - service: homeassistant.turn_off
      data:
        entity_id: input_boolean.kitesurf_wind_request
-
-
 
 
 follow_me_lights_on:
@@ -152,21 +145,19 @@ follow_me_lights_on:
          light.null.light
         {%- endif -%}
 
-
-
 living_room_lights_on:
   sequence:
    - service: script.follow_me_lights_on
      data_template:
        light_id: >
 
-        {%- if is_state("light.living_room_ceiling_light_1_level","on") -%}
+         {%- if is_state("light.living_room_ceiling_light_1_level","on") -%}
             light.living_room_ceiling_light_1_level
          {%- elif is_state("light.living_room_ceiling_light_2_level", "on") -%}
             light.living_room_ceiling_light_2_level
-          {%- else -%}
-          {{ [ "light.living_room_ceiling_light_1_level","light.living_room_ceiling_light_2_level" ] | random }}
-          {%- endif -%}
+         {%- else -%}
+         {{ [ "light.living_room_ceiling_light_1_level","light.living_room_ceiling_light_2_level" ] | random }}
+         {%- endif -%}
 
 
 
@@ -254,3 +245,27 @@ turn_bedroom_aircon_on:
      entity_id: climate.bedroom_climate_control_cooling_1
      data:
        fan_mode: "Auto High"
+
+
+turn_apple_tv_screensaver_on:
+  sequence:
+   - service: remote.send_command
+     data_template:
+      entity_id: remote.livingroom
+      command: PowerOn
+      device: !secret au_device_id_tv
+   - delay:
+       seconds: 3.0
+   - service: remote.send_command
+     data_template:
+      entity_id: remote.livingroom
+      command:
+        - Home
+        - Home
+        - Menu
+      device: !secret au_device_id_apple_tv
+      delay_secs: 0.7
+
+ #  - service: homeassistant.turn_off
+ #    data:
+ #      entity_id: input_boolean.apple_tv

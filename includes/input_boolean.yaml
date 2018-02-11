@@ -1,10 +1,20 @@
-   wind_alert:
+  sonos_living_room:
+    name: Sonos LivingRoom
+    initial: off
+    icon: mdi:apple
+
+  apple_tv:
+    name: Apple Tv
+    initial: off
+    icon: mdi:apple
+
+  wind_alert:
     name: Wind Alert
     initial: on
     icon: mdi:weather-windy
 
   kitesurf_wind_request:
-    name: Beach Conditions Report
+    name: East Coast Situation Report
     initial: off
     icon: mdi:weather-windy
 
