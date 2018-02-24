@@ -674,16 +674,43 @@
         before: '19:00:00'
         after: '07:00:00'
   action:
-    service: notify.facebook_wind_alerts
+    service: script.send_facebook_wind_alert
+
+
+- alias: Office Lights ON
+  trigger:
+    platform: state
+    entity_id: sensor.office_motion
+    to: 'Burglar'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: sun.sun
+        state: 'below_horizon'
+      - condition: state
+        entity_id: input_boolean.motion_detection
+        state: 'on'
+  action:
+    service:  script.follow_me_lights_on
     data_template:
-     message: >
-
-            {{ states.sensor.pws_wind_string.state }}
+      light_id: switch.office_lights_switch_2
 
 
-            Pressure Trend : {{ states.sensor.pws_pressure_trend.state }}
+- alias: Turn off Office lights after 5 mins no motion
+  trigger:
+    platform: state
+    entity_id: sensor.office_motion
+    to: 'Off'
+    for:
+      minutes: 5
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.motion_detection
+        state: 'on'
+  action:
+    service: homeassistant.turn_off
+    entity_id: switch.office_lights_switch_2
 
-
-            Next Hour: {{ states.sensor.pws_weather_1h.state }}
-     target:
-       - !secret user1_phone
