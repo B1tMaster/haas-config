@@ -74,6 +74,14 @@ light.living_room_ceiling_light_1_level:
   homebridge_name: Living Lights 1
   friendly_name: Lving Lights 1
 
+light.dining_table_level_20_0:
+  homebridge_name: Dining Table
+  friendly_name: Dining Table
+
+light.living_room_decor_1_level_21_0:
+  homebridge_name: Decor
+  friendly_name: Decor
+
 light.living_room_ceiling_light_2_level:
   homebridge_name: Living Lights 2
   friendly_name: Lving Lights 2
@@ -106,18 +114,19 @@ climate.office_climate_control_cooling_1:
   homebridge_hidden: true
 
 switch.office_lights_switch_2:
-  homebridge_name: Ofice LED Lights
-  friendly_name: Office LED Lights
+  homebridge_name: Ofice Lights
+  friendly_name: Office Lights
 
 switch.office_lights_switch_3:
   homebridge_name: Ofice LED
   friendly_name: Office LED
 
 switch.office_lights_switch_1:
-  hidden: false
-  homebridge_hidden: false
+  hidden: true
+  homebridge_hidden: true
   homebridge_name: Ofice Lights
   friendly_name: Office Lights
+
 
 sensor.office_climate_control_temperature:
   homebridge_name: Office Temperature
