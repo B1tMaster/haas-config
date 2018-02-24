@@ -17,7 +17,7 @@
         friendly_name: 'Wind'
         icon_template: mdi:weather-windy
         value_template: >-
-          {% if (states.sensor.pws_wind_kph.state + states.pws_wind_gust_kph)/2.0| float > 20.0 -%}
+         {% if (states.sensor.pws_wind_kph.state | float + states.sensor.pws_wind_gust_kph.state | float)/2.0 > 18.0 -%}
             Windy
           {%- else -%}
             Beer
@@ -119,3 +119,20 @@
           {%- endif -%}
 
 
+    office_motion:
+        friendly_name: 'Office Motion'
+        value_template: >-
+          {%- if is_state("sensor.office_motion_burglar", "8") -%}
+            Burglar
+          {%- else -%}
+            Off
+          {%- endif -%}
+
+    kitchen_motion:
+        friendly_name: 'Kitchen Motion'
+        value_template: >-
+          {%- if is_state("sensor.kitchen_sensor_burglar", "8") -%}
+            Burglar
+          {%- else -%}
+            Off
+          {%- endif -%}
