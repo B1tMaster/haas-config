@@ -8,4 +8,8 @@ living_room:
     - light.living_room_ceiling_light_2_level
     - light.living_room_tv_light_strip_level
     - switch.living_room_cube_switch
+    - light.dining_table_level_20_0
+    - light.living_room_decor_1_level_21_0
+    - input_boolean.fan
+
 
