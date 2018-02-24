@@ -136,3 +136,14 @@
           {%- else -%}
             Off
           {%- endif -%}
+
+    office_door_open:
+        friendly_name: 'Office Door'
+        value_template: >-
+          {%- if is_state("sensor.office_motion_access_control", "23") -%}
+            Closed
+          {%- elif is_state("sensor.office_motion_access_control", "22") -%}
+            Open
+          {%- else -%}
+            Unknown
+          {%- endif -%}
