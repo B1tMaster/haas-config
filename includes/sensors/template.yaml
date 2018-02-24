@@ -119,10 +119,10 @@
           {%- endif -%}
 
 
-    office_motion:
+     office_motion:
         friendly_name: 'Office Motion'
         value_template: >-
-          {%- if is_state("sensor.office_motion_burglar", "8") -%}
+          {%- if is_state("sensor.philio_technology_corporation_pst02a_4_in_1_multisensor_burglar", "8") -%}
             Burglar
           {%- else -%}
             Off
@@ -131,7 +131,7 @@
     kitchen_motion:
         friendly_name: 'Kitchen Motion'
         value_template: >-
-          {%- if is_state("sensor.kitchen_sensor_burglar", "8") -%}
+          {%- if is_state("sensor.philio_technology_corporation_pst02a_4_in_1_multisensor_burglar_2", "8") -%}
             Burglar
           {%- else -%}
             Off
@@ -140,10 +140,12 @@
     office_door_open:
         friendly_name: 'Office Door'
         value_template: >-
-          {%- if is_state("sensor.office_motion_access_control", "23") -%}
+          {%- if is_state("sensor.philio_technology_corporation_pst02a_4_in_1_multisensor_access_control", "23") -%}
             Closed
-          {%- elif is_state("sensor.office_motion_access_control", "22") -%}
+          {%- elif is_state("sensor.philio_technology_corporation_pst02a_4_in_1_multisensor_access_control", "22") -%}
             Open
           {%- else -%}
             Unknown
           {%- endif -%}
+
+
