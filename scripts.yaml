@@ -274,10 +274,14 @@ send_facebook_wind_alert:
     - service: notify.facebook_wind_alerts
       data_template:
         message: >
-            {{ states.sensor.pws_wind_string.state }}
+             Current: {{ states.sensor.pws_wind_string.state }}
 
-            Pressure Trend : {{ states.sensor.pws_pressure_trend.state }}
+             Wind Avg: {{ states.sensor.avr_wnd.state | float  | round(1) }} kmh
 
-            Next Hour: {{ states.sensor.pws_weather_1h.state }}
-        target:
+             Gust Avg: {{ states.sensor.avr_wnd_gust.state | float  | round(1) }} kmh
+
+             Pressure Trend : {{ states.sensor.pws_pressure_trend.state }}
+
+             Next Hour: {{ states.sensor.pws_weather_1h.state }}
+       target:
             - BROADCAST
