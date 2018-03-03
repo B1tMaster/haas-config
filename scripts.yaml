@@ -123,7 +123,7 @@ follow_me_lights_on:
      data_template:
        entity_id: >
         {%- set light_remove =  [ light_id ]  %}
-        {%- set all_lights = ['switch.bedroom_ceiling_light_switch' , 'switch.family_room_ceiling_light_switch', 'switch.office_lights_switch_2' ] %}
+        {%- set all_lights = ['switch.bedroom_ceiling_light_switch' , 'switch.family_room_ceiling_light_switch', 'switch.office_lights_switch_2', 'switch.kitchen_light_switch' ] %}
         {%- if is_state('input_boolean.follow_me_lights', 'on') -%}
         {%- for light in all_lights if (light not in light_remove) -%}
         {{light}}{% if not loop.last %}{{", "}}{% endif %}
@@ -274,14 +274,13 @@ send_facebook_wind_alert:
     - service: notify.facebook_wind_alerts
       data_template:
         message: >
-             Current: {{ states.sensor.pws_wind_string.state }}
+            {{ states.sensor.pws_wind_string.state }}
 
-             Wind Avg: {{ states.sensor.avr_wnd.state | float  | round(1) }} kmh
+            Wind Avg: {{ states.sensor.avr_wnd.state | float  | round(1) }} kmh
+            Gust Avg: {{ states.sensor.avr_wnd_gust.state | float  | round(1) }} kmh
 
-             Gust Avg: {{ states.sensor.avr_wnd_gust.state | float  | round(1) }} kmh
+            Pressure Trend : {{ states.sensor.pws_pressure_trend.state }}
 
-             Pressure Trend : {{ states.sensor.pws_pressure_trend.state }}
-
-             Next Hour: {{ states.sensor.pws_weather_1h.state }}
-       target:
+            Next Hour: {{ states.sensor.pws_weather_1h.state }}
+        target:
             - BROADCAST
