@@ -9,7 +9,17 @@ living_room:
     - light.living_room_tv_light_strip_level
     - switch.living_room_cube_switch
     - light.dining_table_level_20_0
-    - light.living_room_decor_1_level_21_0
+    - light.living_room_decor_1_level
     - input_boolean.fan
+    - light.small_decore_level
+
+kitchen:
+  name: Kitchen
+  entities:
+    - switch.kitchen_light_switch
+    - sensor.kitchen_sensor_temperature
+    - sensor.kitchen_door_open
+
+
 
 
