@@ -56,7 +56,7 @@
            person + "Life is like a song, you’re back where you belong.",
            "Welcome Home!" + person
            ] | random }}
-    - service: input_boolean.turn_off
+    - service: homeassistant.turn_off
       data:
         entity_id: input_boolean.dmitry_arriving
 
@@ -93,7 +93,7 @@
            person + "Life is like a song, you’re back where you belong.",
            "Welcome Home " + person
            ] | random }}
-    - service: input_boolean.turn_off
+    - service: homeassistant.turn_off
       data:
         entity_id: input_boolean.eileen_arriving
 
@@ -101,7 +101,7 @@
 - alias: 'Kitesurf Text Alert'
   trigger:
     platform: state
-    entity_id: sensor.windy
+    entity_id: sensor.avgwindy
     to: 'Windy'
   condition:
     condition: and
@@ -677,6 +677,7 @@
     service: script.send_facebook_wind_alert
 
 
+
 - alias: Office Lights ON
   trigger:
     platform: state
@@ -714,3 +715,40 @@
     service: homeassistant.turn_off
     entity_id: switch.office_lights_switch_2
 
+
+- alias: Kitchen Lights ON
+  trigger:
+    platform: state
+    entity_id: sensor.kitchen_motion
+    to: 'Burglar'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: sun.sun
+        state: 'below_horizon'
+      - condition: state
+        entity_id: input_boolean.motion_detection
+        state: 'on'
+  action:
+    service:  script.follow_me_lights_on
+    data_template:
+      light_id: switch.kitchen_light_switch
+
+
+- alias: Turn off Kitchen lights after 10 mins no motion
+  trigger:
+    platform: state
+    entity_id: sensor.office_motion
+    to: 'Off'
+    for:
+      minutes: 10
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.motion_detection
+        state: 'on'
+  action:
+    service: homeassistant.turn_off
+    entity_id: switch.kitchen_light_switch
