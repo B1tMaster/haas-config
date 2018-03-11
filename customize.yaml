@@ -163,3 +163,9 @@ sensor.windy:
   homebridge_hidden: false
 
 
+sensor.instantwindy:
+  homebridge_name: Instant Wind
+  friendly_name: Instant Wind
+  hidden: false
+  homebridge_hidden: false
+

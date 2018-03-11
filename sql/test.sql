@@ -9,6 +9,11 @@ where domain = 'sensor' and entity_id like 'sensor.pws_wind_kph' and created >= 
 order by created desc
 
 
+select * from states
+where domain = 'sensor' and entity_id like 'sensor.pws_wind_kph'
+order by created desc
+limit 50
+
 select domain, entity_id , CONVERT_TZ(created, 'UTC',  'Asia/Singapore') as created from states
 where domain = 'sensor' and entity_id like 'sensor.pws_wind_kph' and created >= now() - INTERVAL 3000 MINUTE
 order by created desc
@@ -21,11 +26,14 @@ order by created desc
 
 
 select avg(state) from states
-where  entity_id = 'sensor.pws_wind_kph' and state != '0' and created >= ADDDATE( UTC_TIMESTAMP(), INTERVAL -30 minute)
+where  entity_id = 'sensor.pws_wind_kph'  and created >= ADDDATE( UTC_TIMESTAMP(), INTERVAL -5 minute)
 group by entity_id
 
+
+
+
 select state, entity_id from states
-where  entity_id = 'sensor.pws_wind_kph' and state != '0' and created >= ADDDATE( UTC_TIMESTAMP(), INTERVAL -40 minute)
+where  entity_id = 'sensor.pws_wind_kph'  and created >= ADDDATE( UTC_TIMESTAMP(), INTERVAL -20 minute)
 order  by entity_id
 
 
