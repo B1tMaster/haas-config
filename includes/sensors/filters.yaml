@@ -3,19 +3,19 @@
   entity_id: sensor.pws_wind_kph
   filters:
       - filter: outlier
-        window_size: 5
-        radius: 5.0
+        window_size: 4
+        radius: 12.0
       - filter: lowpass
-        time_constant: 5
-        precision: 2
+        time_constant: 3
+        precision: 1
 
 - platform: filter
   name: "EMA Gust Wind"
   entity_id: sensor.pws_wind_gust_kph
   filters:
-      - filter: outlier
-        window_size: 5
-        radius: 5.0
       - filter: lowpass
-        time_constant: 5
-        precision: 2
+        time_constant: 3
+        precision: 1
+      - filter: outlier
+        window_size: 3
+        radius: 15.0

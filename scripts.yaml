@@ -282,5 +282,8 @@ send_facebook_wind_alert:
             Pressure Trend : {{ states.sensor.pws_pressure_trend.state }}
 
             Next Hour: {{ states.sensor.pws_weather_1h.state }}
+
+            Nat Sail Center Wind:  {{ states.sensor.nscwindtotal.state }}
+
         target:
             - BROADCAST

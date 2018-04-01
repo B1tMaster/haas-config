@@ -101,7 +101,7 @@
 - alias: 'Kitesurf Text Alert'
   trigger:
     platform: state
-    entity_id: sensor.avgwindy
+    entity_id: sensor.expavgwindy
     to: 'Windy'
   condition:
     condition: and
@@ -113,8 +113,8 @@
         entity_id: input_boolean.wind_alert
         state: 'on'
       - condition: time
-        before: '19:00:00'
-        after: '07:00:00'
+        before: '18:30:00'
+        after: '10:00:00'
   action:
     - service: script.send_wind_alert
       data_template:
@@ -144,6 +144,12 @@
             Next Hour: {{ states.sensor.pws_weather_1h.state }}
 
 
+            EMA Wind:  {{ states.sensor.amawindtotal.state }}
+            AVG Wind:  {{ states.sensor.avgwindtotal.state }}
+
+            NSC Wind:  {{ states.sensor.nscwindtotal.state }}
+
+
 - alias: 'Kitesurf Voice Alert'
   trigger:
     platform: state
@@ -159,8 +165,8 @@
         entity_id: input_boolean.wind_alert
         state: 'on'
       - condition: time
-        before: '19:00:00'
-        after: '07:00:00'
+        before: '18:30:00'
+        after: '10:00:00'
       - condition: state
         entity_id: device_tracker.dmitry
         state: 'home'
@@ -671,8 +677,8 @@
         entity_id: input_boolean.wind_alert
         state: 'on'
       - condition: time
-        before: '19:00:00'
-        after: '07:00:00'
+        before: '18:30:00'
+        after: '10:00:00'
   action:
     service: script.send_facebook_wind_alert
 
@@ -736,13 +742,13 @@
       light_id: switch.kitchen_light_switch
 
 
-- alias: Turn off Kitchen lights after 10 mins no motion
+- alias: Turn off Kitchen lights after 20 mins no motion
   trigger:
     platform: state
     entity_id: sensor.office_motion
     to: 'Off'
     for:
-      minutes: 10
+      minutes: 20
   condition:
     condition: and
     conditions:
