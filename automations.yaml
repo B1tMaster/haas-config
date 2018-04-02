@@ -41,10 +41,9 @@
     entity_id: sensor.living_room_door_entry
     to: 'Open'
   action:
-    - wait_template: "{{ states('sensor.dmitry_arriving') == 'arriving' }}"
-      timeout: '00:01:00'
-    - service: script.arrive_greetings
+    - service: script.arrive_dmitry_greetings
       data_template:
+        person: 'dmitry'
         speech_message: >
            {% set person = 'Dimitri' %}
            {{ [
@@ -68,10 +67,9 @@
     entity_id: sensor.living_room_door_entry
     to: 'Open'
   action:
-    - wait_template: "{{ states('sensor.eileen_arriving') == 'arriving' }}"
-      timeout: 00:01:00
-    - service: script.arrive_greetings
+    - service: script.arrive_eileen_greetings
       data_template:
+        person: 'eileen'
         speech_message: >
            {% set person = 'Eileen' %}
            {{ [
@@ -704,13 +702,13 @@
       light_id: switch.office_lights_switch_2
 
 
-- alias: Turn off Office lights after 5 mins no motion
+- alias: Turn off Office lights after 10 mins no motion
   trigger:
     platform: state
     entity_id: sensor.office_motion
-    to: 'Off'
+    to: 'Burglar'
     for:
-      minutes: 5
+      minutes: 10
   condition:
     condition: and
     conditions:
@@ -746,7 +744,7 @@
   trigger:
     platform: state
     entity_id: sensor.office_motion
-    to: 'Off'
+    to: 'Burglar'
     for:
       minutes: 20
   condition:
@@ -758,3 +756,4 @@
   action:
     service: homeassistant.turn_off
     entity_id: switch.kitchen_light_switch
+
