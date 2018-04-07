@@ -121,6 +121,16 @@
             nobody
           {%- endif -%}
 
+    dogwalker_arriving:
+        friendly_name: 'DogWalker Arriving'
+        value_template: >-
+          {%- if is_state('input_boolean.dogwalker_arriving','on') -%}
+            arriving
+          {%- else -%}
+            N/A
+          {%- endif -%}
+
+
     dmitry_arriving:
         friendly_name: 'Dmitry Arriving'
         value_template: >-

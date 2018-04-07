@@ -83,3 +83,17 @@
 sensor.living_room_steps_led_*:
   hidden: true
   homebridge_hidden: true
+
+"light.kitchen_light*":
+  hidden: true
+  homebridge_hidden: true
+
+"sensor.kitchen_sensor*":
+  hidden: true
+  homebridge_hidden: true
+
+"sensor.family_room_window*":
+  hidden: true
+  homebridge_hidden: true
+
+

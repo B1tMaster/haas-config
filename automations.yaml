@@ -25,6 +25,7 @@
       entity_id:
          - device_tracker.dmitry
          - device_tracker.eileen
+         - device_tracker.dogwalker
       from: 'not_home'
       to: 'home'
   action:
@@ -85,7 +86,7 @@
            "Good to have you back " + person ,
            "How was your day " + person ,
            "Guess who is home?" + person,
-           person + "is now in the house. Yaay!",
+           person + "is now in the house!",
            "Welcome Home Love. We have missed you. Or at least Dexter did.",
            "Our home is now complete. Welcome Back " + person,
            person + "Life is like a song, you’re back where you belong.",
@@ -94,6 +95,40 @@
     - service: homeassistant.turn_off
       data:
         entity_id: input_boolean.eileen_arriving
+
+- alias: 'DogWalker Arrival Greeting'
+  trigger:
+    platform: state
+    entity_id: sensor.living_room_door_entry
+    to: 'Open'
+  action:
+    - service: script.arrive_dogwalker_greetings
+      data_template:
+        person: 'Prioshka'
+        speech_message: >
+           {% set person = 'Preoshka' %}
+           {{ [
+           "Welcome  " + person ,
+           "I was waiting for you to walk me.. Woof.",
+           "My tail is wagging.. Woof,Woof " + person ,
+           "Hope you had a great day " + person ,
+           "I am happy to run on east coast with you " + person ,
+           "Lets go play and run " + person ,
+           "I was about to pee on the floor while waiting for you " + person ,
+           "Hello.. My tail is all wagging" + person ,
+           "Are we going for a walk? Yes. Yes. " ,
+           "Lets play. I am ready to go " + person ,
+           "Was looking out in the window for you " + person ,
+           "Guess who is here?" + person,
+           person + "is in the house. Yay! Woof,Woof!",
+           "Now we can go pee! Welcome Back " + person,
+           person + "Welcome to Dexter's house.",
+           "Welcome to our home. " + person
+           ] | random }}
+    - service: homeassistant.turn_off
+      data:
+        entity_id: input_boolean.dogwalker_arriving
+
 
 
 - alias: 'Kitesurf Text Alert'
@@ -277,7 +312,7 @@
 - alias: Dog Walker Arrived
   trigger:
     platform: state
-    entity_id: device_tracker.prioska
+    entity_id: device_tracker.dogwalker
     from: 'not_home'
     to: 'home'
   action:
@@ -292,7 +327,7 @@
 - alias: Dog Walker Left Home
   trigger:
     platform: state
-    entity_id: device_tracker.prioska
+    entity_id: device_tracker.dogwalker
     from: 'home'
     to: 'not_home'
   action:
@@ -756,4 +791,6 @@
   action:
     service: homeassistant.turn_off
     entity_id: switch.kitchen_light_switch
+
+
 

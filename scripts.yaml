@@ -6,7 +6,7 @@ set_arrive_sensor:
        entity_id: "{{ tracker }}"
    - delay:
          minutes: 1
-   - service: input_boolean.turn_off
+   - service: homeassistant.turn_off
      data_template:
         entity_id: "{{ tracker }}"
 
@@ -43,6 +43,19 @@ arrive_eileen_greetings:
        volume: 0.4
        message: "{{ speech_message }}"
        delay: '00:00:08'
+
+arrive_dogwalker_greetings:
+  alias: "DogWalker Greetings on Arrival Home"
+  sequence:
+   - wait_template: "{{ is_state('sensor.dogwalker_arriving', 'arriving') }}"
+     timeout: '00:01:00'
+   - service: script.sonos_say
+     data_template:
+       sonos_entity: media_player.living_room
+       volume: 0.4
+       message: "{{ speech_message }}"
+       delay: '00:00:08'
+
 
 
 

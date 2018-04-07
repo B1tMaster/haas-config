@@ -59,6 +59,12 @@
     initial: off
     icon: mdi:account-key
 
+  dogwalker_arriving:
+    name: DogWalker Arriving
+    initial: off
+    icon: mdi:account-key
+
+
 
   motion_detection:
     name: Motion Detection
