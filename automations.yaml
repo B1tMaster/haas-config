@@ -172,19 +172,21 @@
     - service: script.send_wind_alert
       data_template:
           wind_message: >
-            Direction {{ states.sensor.pws_wind_dir_2.state }}
-            Current Wind: {{ ((states.sensor.pws_wind_kph_2.state | float * 0.4)  + ( states.sensor.pws_wind_gust_kph.state | float * 0.7 )) | round(1) }} kmh
+            B Jetty: {{ states.sensor.pws_wind_dir.state }} {{ ((states.sensor.pws_wind_kph_2.state | float * 0.4)  + ( states.sensor.pws_wind_gust_kph.state | float * 0.7 )) | round(1) }} kmh
 
-            Last 5 mins range: From {{ states.sensor.pws_wind_kph_2.state | float | round(1) }} kmh to {{ states.sensor.pws_wind_gust_kph.state | float | round(1) }} kmh
-            Last 15 mins avg: {{ states.sensor.amawindtotal.state }}  kmh
-            EMA Wind:  {{ states.sensor.amawindtotal.state | float | round(1)   }} kmh
-            AVG Wind:  {{ states.sensor.avgwindtotal.state | float | round(1) }} kmh
+            NSC:     {{ states.sensor.pws_wind_dir_2.state }}  {{ states.sensor.nscwindtotal.state | float | round(1) }} kmh
+
+            ----------------
+
+            5 min: From {{ states.sensor.pws_wind_kph_2.state | float | round(1) }} kmh To {{ states.sensor.pws_wind_gust_kph.state | float | round(1) }} kmh
+
+            15 min EMA: {{ states.sensor.amawindtotal.state  | float | round(1) }}  kmh
+
+            Temp: {{ states.sensor.pws_temp_c.state }} c  Pressure: {{ states.sensor.pws_pressure_mb.state }} mb
 
             Pressure Trend : {{ states.sensor.pws_pressure_trend.state }}
 
             Next Hour: {{ states.sensor.pws_weather_1h.state }}
-
-            Nat Sail Center:  {{ states.sensor.nscwindtotal.state }} kmh
 
 
 - alias: 'Kitesurf Voice Alert'
