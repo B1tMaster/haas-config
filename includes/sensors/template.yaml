@@ -9,6 +9,8 @@
     - pressure_trend
     - wind_string
     - weather_1h
+    - temp_c
+    - pressure_mb
 
 - platform: wunderground
   friendly_name: NCS Wind
@@ -18,21 +20,6 @@
     - wind_kph
     - wind_dir
     - wind_gust_kph
-
-
-
-- platform: sql
-  db_url: !secret mdb_url
-  queries:
-    - name: avg_wnd
-      query: 'select avg(state) as avr_wind_20m from states where  entity_id = "sensor.pws_wind_kph" and state != "0" and created >= ADDDATE( UTC_TIMESTAMP(), INTERVAL -20 minute) group by entity_id'
-      column: 'avr_wind_20m'
-      unit_of_measurement: kph
-
-    - name: avg_wnd_gust
-      query: 'select avg(state) as avr_wind_gust_20m from states where  entity_id = "sensor.pws_wind_gust_kph" and state != "0" and created >= ADDDATE( UTC_TIMESTAMP(), INTERVAL -20 minute) group by entity_id'
-      column: 'avr_wind_gust_20m'
-      unit_of_measurement: kph
 
 
 
@@ -56,17 +43,7 @@
         friendly_name: 'NSC Wind Total'
         icon_template: mdi:weather-windy
         unit_of_measurement: 'kmh'
-        value_template:  "{{ ( (states.sensor.pws_wind_kph_2.state | float | round(1) ) + (states.sensor.pws_wind_gust_kph_2.state | float | round(1) ) ) / 2.0 }}"
-
-
-
-
-
-    avgwindtotal:
-        friendly_name: 'Avg Wind Total'
-        icon_template: mdi:weather-windy
-        unit_of_measurement: 'kmh'
-        value_template:  "{{ (states.sensor.avg_wnd.state | float + states.sensor.avg_wnd_gust.state | float)/2.0 }}"
+        value_template:  "{{ ( (states.sensor.pws_wind_kph_2.state | float * 0.5 | round(1) ) + (states.sensor.pws_wind_gust_kph_2.state | float * 0.7 | round(1) ) ) / 2.0 }}"
 
 
 
@@ -89,22 +66,11 @@
           {%- endif -%}
 
 
-    avgwindy:
-        friendly_name: 'Average Wind'
-        icon_template: mdi:weather-windy
-        value_template: >-
-         {% if (states.sensor.avg_wnd.state | float + states.sensor.avg_wnd_gust.state | float)/2.0 > 18.0 -%}
-            Windy
-          {%- else -%}
-            Beer
-          {%- endif -%}
-
-
     windy:
         friendly_name: 'Current Wind'
         icon_template: mdi:weather-windy
         value_template: >-
-         {% if ((states.sensor.pws_wind_kph_2.state | float * 0.4)  + ( states.sensor.pws_wind_gust_kph.state | float * 0.7 )) > 18.0 -%}
+         {% if ((states.sensor.pws_wind_kph_2.state | float * 0.5)  + ( states.sensor.pws_wind_gust_kph.state | float * 0.7 )) > 18.0 -%}
             Windy
           {%- else -%}
             Beer
