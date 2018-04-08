@@ -43,7 +43,7 @@
         friendly_name: 'NSC Wind Total'
         icon_template: mdi:weather-windy
         unit_of_measurement: 'kmh'
-        value_template:  "{{ ( (states.sensor.pws_wind_kph_2.state | float * 0.5 | round(1) ) + (states.sensor.pws_wind_gust_kph_2.state | float * 0.7 | round(1) ) ) / 2.0 }}"
+        value_template:  "{{ ( (states.sensor.pws_wind_kph_2.state | float * 0.5 | round(1) ) + (states.sensor.pws_wind_gust_kph_2.state | float * 0.7 | round(1) ) )  }}"
 
 
 
