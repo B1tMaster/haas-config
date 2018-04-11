@@ -134,7 +134,7 @@
 - alias: 'Kitesurf Text Alert'
   trigger:
     platform: state
-    entity_id: sensor.expavgwindy
+    entity_id: sensor.windy
     to: 'Windy'
   condition:
     condition: and
@@ -152,6 +152,7 @@
     - service: script.send_wind_alert
       data_template:
           wind_message: >
+
             {{ [
              "Time to go foiling." ,
              "Bad day at the beach is better than good day at the office.",
@@ -164,7 +165,7 @@
              "Is that just me or is it windy now?",
              "I was getting bored, but it just picked up! Lets go.",
              "Pack your gear! Wind is up.",
-             "Will it still be windy, by you get to the beach?. Only one way to find out.",
+             "Will it still be windy, by the time you get to the beach? Only one way to find out.",
              "Everybody is out ridding. Are you ready to join them?",
              "Its windy! Who will be the first one out?",
              "Seems windy.",
@@ -200,6 +201,7 @@
     - service: script.send_wind_alert
       data_template:
           wind_message: >
+
             {{ [
              "Time to go foiling." ,
              "Bad day at the beach is better than good day at the office.",
@@ -212,7 +214,7 @@
              "Is that just me or is it windy now?",
              "I was getting bored, but it just picked up! Lets go.",
              "Pack your gear! Wind is up.",
-             "Will it still be windy, by you get to the beach?. Only one way to find out.",
+             "Will it still be windy, by the time you get to the beach? Only one way to find out.",
              "Everybody is out ridding. Are you ready to join them?",
              "Its windy! Who will be the first one out?",
              "Seems windy.",

@@ -53,13 +53,17 @@
         unit_of_measurement: 'kmh'
         value_template:  "{{ ((states.sensor.ema_wind.state | float * 0.5 | round(1) ) + (states.sensor.ema_gust_wind.state | float * 0.7 | round(1) )) }}"
 
+    costawindtotal:
+        friendly_name: 'B Jetty Total'
+        icon_template: mdi:weather-windy
+        value_template:  "{{ ((states.sensor.pws_wind_kph_2.state | float * 0.5 | round(1) )  + ( states.sensor.pws_wind_gust_kph.state | float * 0.7 | round(1) ))  }}"
 
 
     expavgwindy:
         friendly_name: 'Exp Avg Wind'
         icon_template: mdi:weather-windy
         value_template: >-
-         {% if ((states.sensor.ema_wind.state | float * 0.5 | round(1)) + (states.sensor.ema_gust_wind.state | float * 0.7) | round(1) ) > 18.0 -%}
+         {% if ((states.sensor.ema_wind.state | float * 0.5 | round(1)) + (states.sensor.ema_gust_wind.state | float * 0.7) | round(1) ) > 17.0 -%}
             Windy
           {%- else -%}
             Beer
@@ -70,7 +74,7 @@
         friendly_name: 'Current Wind'
         icon_template: mdi:weather-windy
         value_template: >-
-         {% if ((states.sensor.pws_wind_kph_2.state | float * 0.5)  + ( states.sensor.pws_wind_gust_kph.state | float * 0.7 )) > 18.0 -%}
+          {% if ( (states.sensor.nscwindtotal.state | float) or (states.sensor.costawindtotal.state | float) or (states.sensor.amawindtotal.state | float) ) > 17.0 %}
             Windy
           {%- else -%}
             Beer
