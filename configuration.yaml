@@ -91,12 +91,12 @@ tts:
 
 remote:
   - platform: harmony
-    name: living room
-    host: !secret remote_host
+    name: livingroom
+    host: !secret harmony_living
 
   - platform: harmony
     name: bedroom
-    host: !secret remote_host
+    host: !secret harmony_bedroom
 
 
 zwave:

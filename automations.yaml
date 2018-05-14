@@ -417,7 +417,8 @@
     entity_id: input_boolean.bedroom_aircon
     to: 'on'
   action:
-      service: script.turn_bedroom_aircon_on
+    service: script.bedroom_aircon_on
+
 
 - alias: Bedroom Aircon OFF
   trigger:
@@ -425,10 +426,7 @@
     entity_id: input_boolean.bedroom_aircon
     to: 'off'
   action:
-    service: climate.set_operation_mode
-    entity_id: climate.bedroom_climate_control_cooling_1
-    data:
-      operation_mode: "Off"
+    service: script.bedroom_aircon_off
 
 
 - alias: Office Aircon ON

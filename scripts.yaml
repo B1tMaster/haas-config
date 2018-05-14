@@ -362,3 +362,22 @@ send_facebook_wind_alert:
 
         target:
             - BROADCAST
+
+bedroom_aircon_on:
+  alias: "Turn Bedroom Aircon ON"
+  sequence:
+   - service: remote.send_command
+     data_template:
+       entity_id: remote.bedroom
+       command: ON
+       device: !secret bd_device_id_aircon
+
+
+bedroom_aircon_off:
+  alias: "Turn Bedroom Aircon OFF"
+  sequence:
+   - service: remote.send_command
+     data_template:
+       entity_id: remote.bedroom
+       command: OFF
+       device: !secret bd_device_id_aircon
