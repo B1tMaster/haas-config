@@ -94,6 +94,10 @@ remote:
     name: living room
     host: !secret remote_host
 
+  - platform: harmony
+    name: bedroom
+    host: !secret remote_host
+
 
 zwave:
   usb_path: /dev/ttyACM0
