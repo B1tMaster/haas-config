@@ -57,8 +57,6 @@ arrive_dogwalker_greetings:
        delay: '00:00:08'
 
 
-
-
 dexter_pee_call:
   alias: "Dexter Pee Action Script"
   sequence:
@@ -266,26 +264,6 @@ turn_office_aircon_on:
 
 
 
-turn_bedroom_aircon_on:
-  sequence:
-   - service: climate.set_operation_mode
-     entity_id: climate.bedroom_climate_control_cooling_1
-     data:
-       operation_mode: "Cool"
-   - delay:
-       seconds: 1
-   - service: climate.set_temperature
-     entity_id: climate.bedroom_climate_control_cooling_1
-     data:
-       temperature: 21
-   - delay:
-       seconds: 1
-   - service: climate.set_fan_mode
-     entity_id: climate.bedroom_climate_control_cooling_1
-     data:
-       fan_mode: "Auto High"
-
-
 turn_apple_tv_screensaver_on:
   sequence:
    - service: remote.send_command
@@ -363,21 +341,28 @@ send_facebook_wind_alert:
         target:
             - BROADCAST
 
-bedroom_aircon_on:
+turn_bedroom_aircon_on:
   alias: "Turn Bedroom Aircon ON"
   sequence:
    - service: remote.send_command
      data_template:
        entity_id: remote.bedroom
-       command: ON
+       command: 'ON'
        device: !secret bd_device_id_aircon
+   - service: homeassistant.turn_on
+     data:
+       entity_id: input_boolean.bedroom_aircon
+       state: 'on'
 
-
-bedroom_aircon_off:
+turn_bedroom_aircon_off:
   alias: "Turn Bedroom Aircon OFF"
   sequence:
    - service: remote.send_command
      data_template:
        entity_id: remote.bedroom
-       command: OFF
+       command: 'OFF'
        device: !secret bd_device_id_aircon
+   - service: homeassistant.turn_off
+     data:
+       entity_id: input_boolean.bedroom_aircon
+       state: 'off'
