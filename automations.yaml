@@ -844,13 +844,13 @@
       light_id: switch.kitchen_light_switch
 
 
-- alias: Turn off Kitchen lights after 20 mins no motion
+- alias: Turn off Kitchen lights after 10 mins no motion
   trigger:
     platform: state
-    entity_id: sensor.office_motion
+    entity_id: sensor.kitchen_motion
     to: 'Burglar'
     for:
-      minutes: 20
+      minutes: 10
   condition:
     condition: and
     conditions:
