@@ -7,7 +7,6 @@ homeassistant:
   time_zone: Asia/Singapore
 
   # Customization file
-  customize: !include customize.yaml
   customize_glob: !include customize_glob.yaml
 
 hassio:
@@ -38,7 +37,6 @@ updater:
   # include_used_components: true
 
 media_player:
-  - platform: sonos
 
   - platform: braviatv
     host: !secret android_tv_ip
@@ -113,6 +111,12 @@ emulated_hue:
      - light
      - switch
 
+#august:
+#  login_method: phone
+#  username: !secret user1_phone
+#  password: !secret august_password
+#  timeout: 20
+
 
 device_tracker:
   - platform: !secret dev_tracker_platform
@@ -161,11 +165,14 @@ camera:
 
 recorder:
   db_url: !secret mdb_url
-  purge_interval: 5
-  purge_keep_days: 20
+  purge_interval: 2
+  purge_keep_days: 7
 
 logger:
   default: info
+  logs:
+    homeassistant.components.notify: info
+
 
 
 sensor: !include_dir_merge_list includes/sensors
