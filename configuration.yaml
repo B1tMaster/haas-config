@@ -169,8 +169,8 @@ recorder:
 logger:
   default: info
   logs:
-    homeassistant.components.notify: debug
-
+    homeassistant.components.notify: info
+    homeassistant.components.device_tracker: info
 
 
 sensor: !include_dir_merge_list includes/sensors

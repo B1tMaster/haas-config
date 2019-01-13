@@ -298,6 +298,11 @@ send_facebook_wind_alert:
             {{ [
              "Time to go foiling." ,
              "Bang, Go!",
+             "Stinky Bay calling!",
+             "Changi or Stinky Bay? That is a question!",
+             "Who is going to foil today?",
+             "Get your ass to the beach now!",
+             "I swear this is the last time honey, I need to go kite now!",
              "Bang, Go! Time to ride.",
              "Get it while it's windy.",
              "Windy Times!",
@@ -325,21 +330,19 @@ send_facebook_wind_alert:
              "Good wind for kitesurfing! "
              ] | random }}
 
-            B Jetty: {{ states.sensor.pws_wind_dir_2.state }}  {{ states.sensor.costawindtotal.state | float | round(1) }} kmh
-
-            NSC:     {{ states.sensor.pws_wind_dir.state }}  {{ states.sensor.nscwindtotal.state | float | round(1) }} kmh
+            Changi/TM: {{ states.sensor.pws_wind_dir.state }}  {{ states.sensor.costawindtotal.state | float | round(1) }} kmh
 
             ----------------
 
-            5 min: From {{ states.sensor.pws_wind_kph.state | float | round(1) }} kmh To {{ states.sensor.pws_wind_gust_kph.state | float | round(1) }} kmh
+            5 min: From {{ states.sensor.pws_wind_kph_3.state | float | round(1) }} kmh To {{ states.sensor.pws_wind_gust_kph_3.state | float | round(1) }} kmh
 
             15 min EMA: {{ states.sensor.amawindtotal.state  | float | round(1) }}  kmh
 
-            Temp: {{ states.sensor.pws_temp_c_2.state }} c  Pressure: {{ states.sensor.pws_pressure_mb_2 .state }} mb
+            Temp: {{ states.sensor.pws_temp_c_3.state }} c  Pressure: {{ states.sensor.pws_pressure_mb_3.state }} mb
 
-            Pressure Trend : {{ states.sensor.pws_pressure_trend_2.state }}
+            Pressure Trend : {{ states.sensor.pws_pressure_trend_3.state }}
 
-            Next Hour: {{ states.sensor.pws_weather_1h_2.state }}
+            Next Hour: {{ states.sensor.pws_weather_1h_3.state }}
 
         target:
             - BROADCAST
