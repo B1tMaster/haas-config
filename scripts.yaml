@@ -332,6 +332,8 @@ send_facebook_wind_alert:
 
             Changi/TM: {{ states.sensor.pws_wind_dir.state }}  {{ states.sensor.costawindtotal.state | float | round(1) }} kmh
 
+            WindChart: http://bit.ly/wind-chart
+
             ----------------
 
             5 min: From {{ states.sensor.pws_wind_kph_3.state | float | round(1) }} kmh To {{ states.sensor.pws_wind_gust_kph_3.state | float | round(1) }} kmh
@@ -375,3 +377,4 @@ turn_bedroom_aircon_off:
    - service: homeassistant.turn_off
      data:
        entity_id: input_boolean.bedroom_aircon
+
