@@ -26,6 +26,7 @@
          - device_tracker.dmitry
          - device_tracker.eileen
          - device_tracker.dogwalker
+         - device_tracker.siti
       from: 'not_home'
       to: 'home'
   action:
@@ -314,7 +315,7 @@
     from: 'someplace'
     to: 'someplace'
   action:
-    service: notify.LivingTv
+    service: notify.living_tv
     data:
       title: "Dexter Wee Alert"
       message: "Daddy I want to go pee!"
@@ -409,6 +410,37 @@
         push:
           badge: 5
           category: TEST_ALARM
+
+- alias: Dog Walker-2 Arrived
+  trigger:
+    platform: state
+    entity_id: device_tracker.siti
+    from: 'not_home'
+    to: 'home'
+  action:
+    service: notify.ios_dmitry
+    data:
+      message: 'Siti Dog Wallker Arrived'
+      data:
+        push:
+          badge: 5
+          category: TEST_ALARM
+
+- alias: Dog Walker-2 Left Home
+  trigger:
+    platform: state
+    entity_id: device_tracker.siti
+    from: 'home'
+    to: 'not_home'
+  action:
+    service: notify.ios_dmitry
+    data:
+      message: 'Siti Dog Walker left house recently'
+      data:
+        push:
+          badge: 5
+          category: TEST_ALARM
+
 
 
 - alias: Aircon ON

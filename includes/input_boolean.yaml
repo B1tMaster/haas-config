@@ -18,6 +18,12 @@
     initial: off
     icon: mdi:weather-windy
 
+  fb_kitesurf_wind_request:
+    name: Send Facebook Wind Report
+    initial: off
+    icon: mdi:weather-windy
+
+
   lobby_motion:
     name: Lobby Motion
     initial: off
@@ -61,6 +67,11 @@
 
   dogwalker_arriving:
     name: DogWalker Arriving
+    initial: off
+    icon: mdi:account-key
+
+  siti_arriving:
+    name: Siti DogWalker Arriving
     initial: off
     icon: mdi:account-key
 
